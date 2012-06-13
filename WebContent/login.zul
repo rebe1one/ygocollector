@@ -1,0 +1,20 @@
+<?page title="Collector - Login"?>
+<window id="loginWin" border="normal" width="300px"
+    title="Log in to Collector"
+    apply="com.rms.collector.control.LoginViewController" mode="overlapped"
+    position="center,center">
+    <grid>
+        <rows>
+            <row>
+                Name:
+                <textbox id="nameTxb" />
+            </row>
+            <row>
+                Password:
+                <textbox id="passwordTxb" type="password" />
+            </row>
+        </rows>
+    </grid>
+    <button id="confirmBtn" label="confirm" />
+    <label id="mesgLbl" />
+</window>

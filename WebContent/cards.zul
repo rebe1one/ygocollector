@@ -1,0 +1,58 @@
+<?page title="Auto Generated index.zul"?>
+<window id="win" title="Card list" width="640px" border="normal"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('cm') @init('com.rms.collector.view.CardViewModel')"
+	validationMessages="@id('cmsgs')">
+	<listbox id="box" multiple="true" rows="5" model="@bind(cm.cards)"
+		selectedItem="@bind(cm.selectedCard)">
+		<listhead>
+			<listheader label="Name" sort="auto(name)" />
+			<listheader label="Card Number" width="80px"
+				sort="auto(cardNumber)" />
+			<listheader label="Level" width="170px" sort="auto(stars)" />
+			<listheader label="Attribute" width="170px" sort="auto(attribute)" />
+			<listheader label="Description" width="170px" sort="auto(description)" />
+			<listheader label="Set ID" width="170px" sort="auto(setID)" />
+		</listhead>
+		<template name="model" var="card">
+			<listitem value="@load(card)">
+				<listcell label="@load(card.name)" />
+				<listcell label="@load(card.cardNumber)" />
+				<listcell label="@load(card.stars)" />
+				<listcell label="@load(card.attribute)" />
+				<listcell label="@load(card.description)" />
+				<listcell label="@load(card.setId)" />
+			</listitem>
+		</template>
+	</listbox>
+	<groupbox id="mygrp"
+		form="@id('card') @load(cm.selectedCard) @save(cm.selectedCard, before='update') @save(cm.newCard, before='add') @validator('com.rms.collector.view.CardValidator')">
+		<caption label="Card" />
+		Name:
+		<textbox id="txtName" cols="25" value="@bind(card.name)" />
+		Card Number:
+		<intbox id="txtPriority" cols="1" value="@bind(card.cardNumber)" />
+		Level:
+		<intbox id="txtLevel" cols="1" value="@bind(card.stars)" />
+		Attribute:
+		<textbox id="txtAttribute" cols="25" value="@bind(card.attribute)" />
+		Description:
+		<textbox id="txtDescription" cols="25" value="@bind(card.description)" />
+		Set ID:
+		<textbox id="txtSetId" cols="25" value="@bind(card.setId)" />
+		<button id="add" label="Add" onClick="@command('add')" />
+		<button id="update" label="Update" onClick="@command('update')"
+			disabled="@load(empty cm.selectedCard)" />
+		<button id="delete" label="Delete" onClick="@command('delete')"
+			disabled="@load(empty cm.selectedCard)" />
+
+		<hlayout>
+			<label style="color:red" value="@load(cmsgs['name'])" />
+			<label style="color:red" value="@load(cmsgs['cardNumber'])" />
+			<label style="color:red" value="@load(cmsgs['level'])" />
+			<label style="color:red" value="@load(cmsgs['attribute'])" />
+			<label style="color:red" value="@load(cmsgs['description'])" />
+			<label style="color:red" value="@load(cmsgs['setId'])" />
+		</hlayout>
+	</groupbox>
+</window>

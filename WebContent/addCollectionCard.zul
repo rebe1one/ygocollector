@@ -1,0 +1,28 @@
+<?page title="Collector - Login"?>
+<window id="createCollectionCardWin" border="normal" width="500px"
+    title="Add card to collection"
+    apply="com.rms.collector.control.CollectionCardFormController" mode="overlapped"
+    position="center,center" closable="true">
+    <grid>
+        <rows>
+            <row>
+                Card Name:
+                <textbox id="cardName" />
+            </row>
+            <row>
+            	Amount:
+            	<spinner id="amount" value="1" constraint="no empty" />
+            </row>
+            <row>
+                Rarity:
+                <listbox id="rarity" rows="1" mold="select">
+                	<template name="model">
+						<listitem label="${each.getDescription()}"/>
+					</template>
+                </listbox>
+            </row>
+        </rows>
+    </grid>
+    <button id="confirm" label="Add" />
+    <label id="mesgLbl" />
+</window>

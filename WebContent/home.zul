@@ -1,0 +1,92 @@
+<?page title="Collector" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout apply="com.rms.collector.control.HomeViewController">
+	<north size="150px">
+		<label value="Banner" style="color:gray;font-size:30px" />
+	</north>
+	<center border="0">
+		<borderlayout>
+			<west size="200px" flex="true" border="0" splittable="true">
+				<borderlayout>
+					<north title="Collections" size="50%" flex="true" splittable="true">
+						<vlayout>
+						<toolbar width="100%" height="22px">
+							<toolbarbutton id="createCollection" label="New Collection"/>
+						</toolbar>
+							<listbox id="collectionList" height="245px" style="margin: 5px;"
+								emptyMessage="No items match your search">
+								<listhead>
+									<listheader label="ID" sort="auto(id)" />
+									<listheader label="Name" sort="auto(name)" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.getId()}" />
+										<listcell label="${each.getName()}" />
+									</listitem>
+								</template>
+							</listbox>
+						</vlayout>
+					</north>
+					<center title="Decks" flex="true">
+						<label value="Decks" style="color:gray;font-size:30px" />
+					</center>
+				</borderlayout>
+			</west>
+			<center>
+				<vlayout>
+					<toolbar width="100%" height="22px">
+						<toolbarbutton id="addCollectionCard" disabled="true" label="Add Card"/>
+						<toolbarbutton id="refreshCollectionPrices" disabled="true" label="Refresh Prices"/>
+					</toolbar>
+					<hlayout width="100%">
+						<groupbox mold="3d">
+		                    <caption label="Collection Info" />
+	                        <grid width="300px" sclass="status" id="collectionInfo">
+	                            <rows>
+	                                <row>
+	                                    <cell sclass="head"><label>Name</label></cell>
+	                                    <label id="collectionNameField"/>
+	                                </row>
+	                                <row>
+	                                    <cell sclass="head"><label>Total Value</label></cell>
+	                                    <label id="collectionTotalValueField"/>
+	                                </row>
+	                                <row>
+	                                    <cell sclass="head"><label>Highest Value Card</label></cell>
+	                                    <label id="collectionHighestValueField"/>
+	                                </row>
+	                            </rows>
+	                        </grid>
+		                </groupbox>
+		                <groupbox mold="3d" hflex="1">
+		                	<caption label="Collection Cards" />
+							<listbox id="collectionCardList" height="500px;" hflex="1" style="margin: 5px;"
+								emptyMessage="No items match your search">
+								<listhead>
+									<listheader label="ID" sort="auto(card_id)" />
+									<listheader label="Name" sort="auto(name)" />
+									<listheader label="Rarity" sort="auto(rarity))" />
+									<listheader label="Amount" sort="auto(amount)" />
+									<listheader label="Attribute" sort="auto(attribute)" />
+									<listheader label="Price" sort="auto(price)" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.getCardId()}" />
+										<listcell label="${each.getName()}" />
+										<listcell label="${each.getRarity()}" />
+										<listcell label="${each.getAmount()}" />
+										<listcell label="${each.getAttribute()}" />
+										<listcell label="${each.getPrice()}" />
+									</listitem>
+								</template>
+							</listbox>
+						</groupbox>
+					</hlayout>
+				</vlayout>
+			</center>
+		</borderlayout>
+	</center>
+</borderlayout>
+</zk>

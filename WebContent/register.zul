@@ -1,0 +1,32 @@
+<?page title="Collector - Login"?>
+<window id="registerWin" border="normal" width="500px"
+    title="Register for an account"
+    apply="com.rms.collector.control.RegisterViewController" mode="overlapped"
+    position="center,center">
+    <grid>
+        <rows>
+            <row>
+                First Name:
+                <textbox id="firstNameTxb" />
+            </row>
+            <row>
+       			Last Name:
+	            <textbox id="lastNameTxb" />
+	        </row>
+            <row>
+       			Email:
+	            <textbox id="emailTxb" />
+	        </row>
+	        <row>
+       			User login:
+	            <textbox id="userLoginTxb" />
+	        </row>
+            <row>
+                Password:
+                <textbox id="passwordTxb" type="password" />
+            </row>
+        </rows>
+    </grid>
+    <button id="confirmBtn" label="confirm" />
+    <label id="mesgLbl" />
+</window>
