@@ -41,6 +41,63 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
         createCollectionCard();
     }
     
+    public void onClick$confirmAndContinue(Event event) {
+    	createCollectionCardAndContinue();
+    }
+    
+    public void onOK$createCollectionCardWin() {
+    	createCollectionCardAndContinue();
+    }
+    
+    private void createCollectionCardAndContinue() {
+    	CardDAO cardDAO = new CardDAO();
+    	cardDAO.startTransaction();
+    	int id = (Integer)this.arg.get("collectionId");
+    	try {
+			if (!Util.isEmpty(cardName.getValue()) && rarity.getSelectedCount() > 0) {
+				List<Filter> filters = new ArrayList<Filter>();
+				filters.add(new Filter("name", cardName.getValue()));
+				Card card = cardDAO.findSingle(filters);
+	    		CollectionCard cc = new CollectionCard(id, 
+	    				card.getId(), amount.getValue(), 
+	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity());
+	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
+	    		filters = new ArrayList<Filter>();
+	    		filters.add(new Filter("collection_id", cc.getCollectionId()));
+	    		filters.add(Filter.AND);
+	    		filters.add(new Filter("card_id", cc.getCardId()));
+	    		filters.add(Filter.AND);
+	    		filters.add(new Filter("rarity", cc.getRarity()));
+	    		CollectionCard collectionCard = ccDAO.findSingle(filters);
+	    		if (Util.isNotEmpty(collectionCard)) {
+	    			collectionCard.setAmount(collectionCard.getAmount() + amount.getValue());
+	    			ccDAO.update(collectionCard);
+	    		} else {
+	    			ccDAO.insert(cc);
+	    		}
+	    		new CardManager(card.getName()).start();
+	    		cardName.setValue("");
+	    		amount.setValue(1);
+	    		cardName.setFocus(true);
+	    	} else {
+	    		mesgLbl.setValue("Please enter a card name.");
+	    	}
+			cardDAO.commmitTransaction();
+			
+			CollectionCardViewDAO dao = new CollectionCardViewDAO();
+	    	List<CollectionCardView> visits = dao.findByCollectionId(id);
+	    	((Listbox)this.arg.get("collectionCardList")).setModel(new ListModelList<CollectionCardView>(visits));
+	    	
+	    	CollectionManager cm = new CollectionManager(id);
+	    	((Label)this.arg.get("collectionTotalValueField")).setValue(cm.getTotalPrice().toPlainString());
+	    	((Label)this.arg.get("collectionHighestValueField")).setValue(cm.getHighestPrice().toPlainString());
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		mesgLbl.setValue("An error has occurred.");
+    		cardDAO.rollbackTransaction();
+    	}
+    }
+    
     private void createCollectionCard() {
     	CardDAO cardDAO = new CardDAO();
     	cardDAO.startTransaction();

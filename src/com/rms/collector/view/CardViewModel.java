@@ -1,5 +1,6 @@
 package com.rms.collector.view;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.zkoss.bind.annotation.Command;
@@ -36,20 +37,20 @@ public class CardViewModel {
 	
 	@Command("add")
 	@NotifyChange("cards")
-	public void add() {
+	public void add() throws SQLException {
 		cardDao.insert(this.newCard);
 		this.newCard = new Card();
 	}
 	
 	@Command("update")
 	@NotifyChange("cards")
-	public void update() {
+	public void update() throws SQLException {
 		cardDao.update(this.selectedCard);
 	}
 	
 	@Command("delete")
 	@NotifyChange({"cards", "selectedCard"})
-	public void delete() {
+	public void delete() throws SQLException {
 		//shouldn't be able to delete with selectedCard being null anyway
 		//unless trying to hack the system, so just ignore the request
 		if(this.selectedCard != null) {

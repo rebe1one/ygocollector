@@ -89,12 +89,21 @@ public class CardManager extends Thread {
                                 new InputStreamReader(
                                 yc.getInputStream()));
         String inputLine;
-        Pattern compiledRegex = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z0-9 \\-]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+) - ([a-zA-Z ]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
+        Pattern regularCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+) - ([a-zA-Z ]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
+        Pattern ultimateCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z ]+) - ([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
         while ((inputLine = in.readLine()) != null) {
-        	Matcher regexMatcher = compiledRegex.matcher(inputLine);
+        	Matcher regexMatcher = regularCardExpr.matcher(inputLine);
         	while (regexMatcher.find()) {
         		if (regexMatcher.group(2).toLowerCase().startsWith(cardName.toLowerCase())) {
         			ExternalCardInfo eci = new ExternalCardInfo(regexMatcher.group(2), BigDecimal.valueOf(Double.valueOf(regexMatcher.group(5))), regexMatcher.group(3), regexMatcher.group(4));
+        			cardInfos.add(eci);
+        			System.out.println(eci);
+        		}
+        	}
+        	regexMatcher = ultimateCardExpr.matcher(inputLine);
+        	while (regexMatcher.find()) {
+        		if (regexMatcher.group(3).toLowerCase().startsWith(cardName.toLowerCase())) {
+        			ExternalCardInfo eci = new ExternalCardInfo(regexMatcher.group(3), BigDecimal.valueOf(Double.valueOf(regexMatcher.group(5))), regexMatcher.group(4), regexMatcher.group(2));
         			cardInfos.add(eci);
         			System.out.println(eci);
         		}

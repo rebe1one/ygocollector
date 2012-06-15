@@ -23,6 +23,7 @@
             </row>
         </rows>
     </grid>
-    <button id="confirm" label="Add" />
+    <button id="confirm" label="Add and Close" />
+    <button id="confirmAndContinue" label="Add" />
     <label id="mesgLbl" />
 </window>

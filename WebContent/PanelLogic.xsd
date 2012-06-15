@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.andreitulai.com/pl/PanelLogic" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:pl="http://www.andreitulai.com/pl/PanelLogic">
+
+
+    
+
+    <element name="PanelDocument">
+    	<complexType>
+    		<sequence>
+    			<element ref="pl:Panel" maxOccurs="unbounded" minOccurs="1"></element>
+    		</sequence>
+    	</complexType></element>
+
+
+    <element name="Panel" type="pl:PanelType"></element>
+    
+
+    <complexType name="PanelType">
+    	<sequence>
+    		<element ref="pl:Background" maxOccurs="1" minOccurs="0"></element>
+    		<element ref="pl:Sensor" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+    
+    <element name="Sensor" type="pl:SensorType"></element>
+
+    <complexType name="SensorType">
+    	<attribute name="type" type="string"></attribute>
+    	<attribute name="xpos" type="double"></attribute>
+    	<attribute name="ypos" type="double"></attribute>
+    	<attribute name="id" type="string"></attribute>
+    </complexType>
+
+    <element name="Background" type="pl:BackgroundType"></element>
+    
+    <complexType name="BackgroundType">
+    	<attribute name="src" type="string"></attribute>
+    	<attribute name="width" type="int"></attribute>
+    	<attribute name="height" type="int"></attribute>
+    </complexType>
+</schema>

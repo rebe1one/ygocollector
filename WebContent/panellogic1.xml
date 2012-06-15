@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pl:PanelDocument xmlns:pl="http://www.andreitulai.com/pl/PanelLogic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.andreitulai.com/pl/PanelLogic PanelLogic.xsd ">
+  <pl:Panel>
+    <pl:Sensor id="sensor1" type="light" xpos="20" ypos="40"/>
+    <pl:Sensor id="sensor2" type="light" xpos="50" ypos="40"/>
+    <pl:Sensor id="sensor3" type="light" xpos="20" ypos="60"/>
+    <pl:Sensor id="sensor4" type="light" xpos="50" ypos="60"/>
+  </pl:Panel>
+</pl:PanelDocument>
