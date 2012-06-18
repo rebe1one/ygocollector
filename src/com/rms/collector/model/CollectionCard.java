@@ -5,16 +5,18 @@ public class CollectionCard {
 	private int cardId;
 	private int amount;
 	private String rarity;
+	private int locationId;
 	public CollectionCard() {
 		super();
 	}
 	public CollectionCard(int collectionId, int cardId, int amount,
-			String rarity) {
+			String rarity, int locationId) {
 		super();
 		this.collectionId = collectionId;
 		this.cardId = cardId;
 		this.amount = amount;
 		this.rarity = rarity;
+		this.locationId = locationId;
 	}
 	public int getCollectionId() {
 		return collectionId;
@@ -39,5 +41,11 @@ public class CollectionCard {
 	}
 	public void setRarity(String rarity) {
 		this.rarity = rarity;
+	}
+	public int getLocationId() {
+		return locationId;
+	}
+	public void setLocationId(int locationId) {
+		this.locationId = locationId;
 	}
 }

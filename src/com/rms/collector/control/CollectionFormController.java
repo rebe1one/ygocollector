@@ -1,8 +1,12 @@
 package com.rms.collector.control;
 
+import java.util.List;
+
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -31,11 +35,16 @@ public class CollectionFormController extends GenericForwardComposer<Window> {
 	    		CollectionDAO collectionDAO = new CollectionDAO();
 	    		collectionDAO.insert(collection);
 	    		collectionWin.detach();
+	    		Listbox collectionList = (Listbox)this.arg.get("collectionList");
+	    		CollectionDAO dao = new CollectionDAO();
+	        	List<Collection> collections = dao.findByUserId(UserCredentialManager.getInstance().getUserLogin().getUserId());
+	        	collectionList.setModel(new ListModelList<Collection>(collections));
 	    	} else {
 	    		mesgLbl.setValue("Please enter a collection name.");
 	    	}
     	} catch (Exception e) {
     		mesgLbl.setValue("An error has occurred.");
+    		e.printStackTrace();
     	}
     }
 }

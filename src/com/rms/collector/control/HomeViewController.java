@@ -17,7 +17,9 @@ import org.zkoss.zul.Window;
 
 import com.rms.collector.data.CollectionCardViewDAO;
 import com.rms.collector.data.CollectionDAO;
+import com.rms.collector.data.LocationDAO;
 import com.rms.collector.model.Collection;
+import com.rms.collector.model.Location;
 import com.rms.collector.model.view.CollectionCardView;
 import com.rms.collector.util.Util;
 
@@ -27,7 +29,7 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Listbox collectionList, collectionCardList;
+	private Listbox collectionList, locationList, collectionCardList;
 	
 	private Button addCollectionCard, refreshCollectionPrices;
 	
@@ -37,7 +39,19 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 
 	public void onClick$createCollection() {
     	// popup create collection form
-		Component comp = Executions.createComponents("createCollection.zul", null, null);
+		HashMap<String, Object> args = new HashMap<String, Object>();
+		args.put("collectionList", collectionList);
+		Component comp = Executions.createComponents("createCollection.zul", null, args);
+		if(comp instanceof Window) {
+            ((Window)comp).doModal();
+        }
+    }
+	
+	public void onClick$createLocation() {
+    	// popup create collection form
+		HashMap<String, Object> args = new HashMap<String, Object>();
+		args.put("locationList", locationList);
+		Component comp = Executions.createComponents("createLocation.zul", null, args);
 		if(comp instanceof Window) {
             ((Window)comp).doModal();
         }
@@ -98,5 +112,8 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
         CollectionDAO dao = new CollectionDAO();
     	List<Collection> collections = dao.findByUserId(UserCredentialManager.getInstance().getUserLogin().getUserId());
     	collectionList.setModel(new ListModelList<Collection>(collections));
+    	LocationDAO locationDAO = new LocationDAO();
+    	List<Location> locations = locationDAO.findByUserId(UserCredentialManager.getInstance().getUserLogin().getUserId());
+    	locationList.setModel(new ListModelList<Location>(locations));
     }
 }

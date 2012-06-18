@@ -16,10 +16,12 @@ import com.rms.collector.data.CardDAO;
 import com.rms.collector.data.CollectionCardDAO;
 import com.rms.collector.data.CollectionCardViewDAO;
 import com.rms.collector.data.CollectionDAO;
+import com.rms.collector.data.LocationDAO;
 import com.rms.collector.data.RarityDAO;
 import com.rms.collector.model.Card;
 import com.rms.collector.model.Collection;
 import com.rms.collector.model.CollectionCard;
+import com.rms.collector.model.Location;
 import com.rms.collector.model.Rarity;
 import com.rms.collector.model.view.CollectionCardView;
 import com.rms.collector.util.Filter;
@@ -32,7 +34,7 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	 */
 	private static final long serialVersionUID = 1L;
 	private Textbox cardName;
-	private Listbox rarity;
+	private Listbox rarity, location;
 	private Spinner amount;
 	private Window createCollectionCardWin;
     private Label mesgLbl;
@@ -55,12 +57,16 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
     	int id = (Integer)this.arg.get("collectionId");
     	try {
 			if (!Util.isEmpty(cardName.getValue()) && rarity.getSelectedCount() > 0) {
+				if (location.getSelectedCount() == 0) {
+					location.setSelectedIndex(0);
+				}
 				List<Filter> filters = new ArrayList<Filter>();
 				filters.add(new Filter("name", cardName.getValue()));
 				Card card = cardDAO.findSingle(filters);
 	    		CollectionCard cc = new CollectionCard(id, 
 	    				card.getId(), amount.getValue(), 
-	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity());
+	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity(),
+	    				((Location)location.getSelectedItem().getValue()).getId());
 	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
 	    		filters = new ArrayList<Filter>();
 	    		filters.add(new Filter("collection_id", cc.getCollectionId()));
@@ -104,12 +110,16 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
     	int id = (Integer)this.arg.get("collectionId");
     	try {
 			if (!Util.isEmpty(cardName.getValue()) && rarity.getSelectedCount() > 0) {
+				if (location.getSelectedCount() == 0) {
+					location.setSelectedIndex(0);
+				}
 				List<Filter> filters = new ArrayList<Filter>();
 				filters.add(new Filter("name", cardName.getValue()));
 				Card card = cardDAO.findSingle(filters);
 	    		CollectionCard cc = new CollectionCard(id, 
 	    				card.getId(), amount.getValue(), 
-	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity());
+	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity(),
+	    				((Location)location.getSelectedItem().getValue()).getId());
 	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
 	    		filters = new ArrayList<Filter>();
 	    		filters.add(new Filter("collection_id", cc.getCollectionId()));
@@ -151,5 +161,9 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 		RarityDAO rDAO = new RarityDAO();
 		List<Rarity> rarities = rDAO.findAll();
 		rarity.setModel(new ListModelList<Rarity>(rarities));
+		LocationDAO lDAO = new LocationDAO();
+		List<Location> locations = lDAO.findByUserId(UserCredentialManager.getInstance().getUserLogin().getUserId());
+		location.setModel(new ListModelList<Location>(locations));
 	}
+    
 }

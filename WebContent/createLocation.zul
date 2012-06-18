@@ -1,0 +1,16 @@
+<?page title="Collector"?>
+<window id="locationWin" border="normal" width="500px"
+    title="Create a location"
+    apply="com.rms.collector.control.LocationFormController" mode="overlapped"
+    position="center,center" closable="true">
+    <grid>
+        <rows>
+            <row>
+                Location Name:
+                <textbox id="locationName" />
+            </row>
+        </rows>
+    </grid>
+    <button id="confirm" label="Create" />
+    <label id="mesgLbl" />
+</window>

@@ -1,13 +1,13 @@
-<?page title="Collector - Login"?>
-<window id="createCollectionCardWin" border="normal" width="500px"
-    title="Add card to collection"
-    apply="com.rms.collector.control.CollectionCardFormController" mode="overlapped"
+<?page title="Collector"?>
+<window id="editCollectionCardWin" border="normal" width="500px"
+    title="Edit collection card"
+    apply="com.rms.collector.control.EditCollectionCardFormController" mode="overlapped"
     position="center,center" closable="true">
     <grid>
         <rows>
             <row>
                 Card Name:
-                <textbox id="cardName" />
+                <label id="cardName" />
             </row>
             <row>
             	Amount:
@@ -15,7 +15,7 @@
             </row>
             <row>
                 Rarity:
-                <listbox id="rarity" rows="1" mold="select">
+                <listbox id="rarity" mold="select">
                 	<template name="model">
 						<listitem label="${each.getDescription()}"/>
 					</template>
@@ -23,7 +23,7 @@
             </row>
             <row>
             	Location:
-            	<listbox id="location" rows="1" mold="select">
+            	<listbox id="location" mold="select">
                 	<template name="model">
 						<listitem label="${each.getName()}"/>
 					</template>
@@ -31,7 +31,6 @@
             </row>
         </rows>
     </grid>
-    <button id="confirm" label="Add and Close" />
-    <button id="confirmAndContinue" label="Add" />
+    <button id="confirm" label="Save" />
     <label id="mesgLbl" />
 </window>

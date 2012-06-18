@@ -10,6 +10,7 @@ public class CollectionCardView {
 	private int amount;
 	private String attribute;
 	private BigDecimal price;
+	private String locationName;
 	public CollectionCardView() { }
 	public int getCollectionId() {
 		return collectionId;
@@ -52,5 +53,11 @@ public class CollectionCardView {
 	}
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public String getLocationName() {
+		return locationName;
+	}
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
 	}
 }

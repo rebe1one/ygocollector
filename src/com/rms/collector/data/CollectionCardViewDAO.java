@@ -14,7 +14,7 @@ public class CollectionCardViewDAO extends DAO {
 		try {
 			// get connection
 		    Statement stmt = ds.getStatement();
-			ResultSet rs = stmt.executeQuery("select CollectionCard.card_id, CollectionCard.amount, CollectionCard.rarity, Card.name, Card.attribute, Price.price from CollectionCard left outer join Card on CollectionCard.card_id = Card.id left outer join Price on CollectionCard.card_id = Price.card_id and CollectionCard.rarity = Price.rarity where CollectionCard.collection_id = " + id + " group by Card.name, CollectionCard.rarity");
+			ResultSet rs = stmt.executeQuery("select CollectionCard.card_id, CollectionCard.amount, CollectionCard.rarity, Card.name, Card.attribute, Price.price, Location.name as location_name from CollectionCard left outer join Card on CollectionCard.card_id = Card.id left outer join Price on CollectionCard.card_id = Price.card_id and CollectionCard.rarity = Price.rarity left outer join Location on CollectionCard.location_id = Location.id where CollectionCard.collection_id = " + id + " group by Card.name, CollectionCard.rarity");
 
 			// fetch all events from database
 			CollectionCardView ccv;
@@ -28,6 +28,7 @@ public class CollectionCardViewDAO extends DAO {
 				ccv.setName(rs.getString(4));
 				ccv.setAttribute(rs.getString(5));
 				ccv.setPrice(rs.getBigDecimal(6));
+				ccv.setLocationName(rs.getString(7));
 				allCollectionCards.add(ccv);
 			}
 		} catch (SQLException e) {

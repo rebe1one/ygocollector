@@ -31,6 +31,7 @@ public class CollectionCardDAO extends DAO implements iDAO<CollectionCard> {
 				cc.setCardId(rs.getInt(2));
 				cc.setAmount(rs.getInt(3));
 				cc.setRarity(rs.getString(4));
+				cc.setLocationId(rs.getInt(5));
 				allCollectionCards.add(cc);
 			}
 		} catch (SQLException e) {
@@ -65,6 +66,7 @@ public class CollectionCardDAO extends DAO implements iDAO<CollectionCard> {
 				cc.setCardId(rs.getInt(2));
 				cc.setAmount(rs.getInt(3));
 				cc.setRarity(rs.getString(4));
+				cc.setLocationId(rs.getInt(5));
 				allCollectionCards.add(cc);
 			}
 		} catch (SQLException e) {
@@ -79,14 +81,15 @@ public class CollectionCardDAO extends DAO implements iDAO<CollectionCard> {
 	@Override
 	public boolean delete(CollectionCard entity) throws SQLException {
 		return execute("DELETE FROM CollectionCard WHERE collection_id = '" + entity.getCollectionId() 
-				+ "' AND card_id = '" + entity.getCardId() + "' AND rarity = '" + entity.getRarity() + "'");
+				+ "' AND card_id = '" + entity.getCardId() + "' AND rarity = '" + entity.getRarity()
+				+ "' AND location_id = '" + entity.getLocationId() + "'");
 	}
 
 	@Override
 	public Object insert(CollectionCard entity) throws SQLException {
-		return execute("INSERT INTO CollectionCard(collection_id, card_id, amount, rarity) " +
+		return execute("INSERT INTO CollectionCard(collection_id, card_id, amount, rarity, location_id) " +
                 "VALUES ('" + entity.getCollectionId() + "','" + entity.getCardId() + "','" 
-				+ entity.getAmount() + "', '" + entity.getRarity() + "')");
+				+ entity.getAmount() + "', '" + entity.getRarity() + "', '" + entity.getLocationId() + "')");
 	}
 
 	@Override
@@ -94,6 +97,7 @@ public class CollectionCardDAO extends DAO implements iDAO<CollectionCard> {
 		return execute("UPDATE CollectionCard SET amount = '" + entity.getAmount() + 
                 "' where collection_id = '" + entity.getCollectionId() + 
                 "' and rarity = '" + entity.getRarity() +
+                "' and location_id = '" + entity.getLocationId() +
                 "' and card_id = " + entity.getCardId());
 	}
 

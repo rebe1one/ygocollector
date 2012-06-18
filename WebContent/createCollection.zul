@@ -1,4 +1,4 @@
-<?page title="Collector - Login"?>
+<?page title="Collector"?>
 <window id="collectionWin" border="normal" width="500px"
     title="Create a collection"
     apply="com.rms.collector.control.CollectionFormController" mode="overlapped"
