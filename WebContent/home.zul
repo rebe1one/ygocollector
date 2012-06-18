@@ -15,11 +15,13 @@
 </zscript>
 <borderlayout apply="com.rms.collector.control.HomeViewController">
 	<north size="150px">
-		<vlayout>
-			<label value="Banner" style="color:gray;font-size:30px" />
-			<label id="welcomeLabel"/>
-			<button id="logout" label="Logout"/>
-		</vlayout>
+		<div>
+			<div style="float:right">
+				<label id="welcomeLabel"/>
+			    <button id="logout" label="Logout"/>
+		    </div>
+		    <image src="/images/ygo_logo.jpg"/>
+		</div>
 	</north>
 	<center border="0">
 		<borderlayout>
