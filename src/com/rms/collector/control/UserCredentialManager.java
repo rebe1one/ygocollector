@@ -46,14 +46,18 @@ public class UserCredentialManager {
     	return false;
     }
     
+    public void check() {
+    	if (!isAuthenticated()) {
+    		logout();
+    	}
+    }
+    
     public void logout() {
     	user = null;
-    	Executions.sendRedirect("/index.zul");
+    	Executions.sendRedirect("/login.zul");
     }
     
     public UserLogin getUserLogin() {
-    	// TODO: Remove this when security is fully implemented.
-    	return new UserLogin(5, "atulai", "");
-    	//return this.user;
+    	return this.user;
     }
 }

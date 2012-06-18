@@ -6,7 +6,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rms.collector.model.Card;
 import com.rms.collector.model.User;
+import com.rms.collector.util.Filter;
+import com.rms.collector.util.Util;
 
 public class UserDAO extends DAO implements iDAO<User> {
 	protected final DataSource ds = DataSource.INSTANCE;
@@ -37,6 +40,41 @@ public class UserDAO extends DAO implements iDAO<User> {
 		}
 		
 		return allUsers;
+	}
+	
+	public User findSingle(List<Filter> filters) {
+		List<User> user = find(filters);
+		if (user.size() > 0) {
+			return user.get(0);
+		}
+		return null;
+	}
+	
+	public List<User> find(List<Filter> filters) {
+		List<User> users = new ArrayList<User>();
+		try {
+			// get connection
+		    Statement stmt = ds.getStatement();
+			ResultSet rs = stmt.executeQuery(Util.buildSQLString("SELECT * FROM User WHERE ", filters));
+
+			// fetch all events from database
+			User user;
+			
+			while (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt(1));
+		        user.setFirstName(rs.getString(2));
+				user.setLastName(rs.getString(3));
+				user.setEmail(rs.getString(4));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    ds.close();
+		}
+		
+		return users;
 	}
 
 	@Override

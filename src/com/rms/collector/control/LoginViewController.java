@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -42,7 +43,7 @@ public class LoginViewController extends SelectorComposer<Window> {
     		if (userLogin.getPassword().equals(hashStr)) {
     			UserCredentialManager.getInstance().authenticate(userLogin);
     			mesgLbl.setValue("Success!");
-    			return true;
+    			Executions.sendRedirect("/home.zul");
     		}
     		return false;
     	} catch (NoSuchAlgorithmException e) {
