@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javax.xml.stream.FactoryConfigurationError;
 
 import com.rms.collector.data.CardDAO;
+import com.rms.collector.data.CollectionCardDAO;
 import com.rms.collector.data.PriceDAO;
 import com.rms.collector.data.RarityDAO;
 import com.rms.collector.model.Card;
@@ -82,7 +83,6 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 	}
 	
 	private class PriceLookupThread extends NotifyingThread {
-		private String cardName;
 		private List<CollectionCardView> cards;
 		
 		public PriceLookupThread(List<CollectionCardView> cards) {
@@ -93,16 +93,13 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 		public void doRun() {
 			if (cards != null) {
 				for (CollectionCardView ccv : cards) {
-					cardName = ccv.getName();
-					processCard();
+					processCard(ccv);
 				}
-			} else {
-				processCard();
 			}
 		}
 		
-		private void processCard() {
-			List<ExternalCardInfo> eci = getOnlinePrices();
+		private void processCard(CollectionCardView ccv) {
+			List<ExternalCardInfo> eci = getOnlinePrices(ccv.getName());
 			CardDAO cardDAO = new CardDAO();
 			cardDAO.startTransaction();
 			for (ExternalCardInfo i : eci) {
@@ -117,6 +114,13 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 					PriceDAO dao = new PriceDAO();
 					Price p = new Price(card.getId(), 0, "UNL", i.getPrice(), Util.getCurrentTimestamp(), r.getRarity(), i.getSetId());
 					dao.insert(p);
+					if (ccv.getRarity().equals(p.getRarity())) {
+						CollectionCardDAO ccDAO = new CollectionCardDAO();
+						ccDAO.delete(ccv);
+						ccv.setPriceSourceId(p.getSourceId());
+						ccv.setSetId(p.getSetId());
+						ccDAO.insert(ccv);
+					}
 				} catch (SQLException e) {
 					cardDAO.rollbackTransaction();
 					e.printStackTrace();
@@ -126,7 +130,7 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 			cardDAO.commmitTransaction();
 		}
 		
-		public List<ExternalCardInfo> getOnlinePrices() {
+		public List<ExternalCardInfo> getOnlinePrices(String cardName) {
 			List<ExternalCardInfo> cardInfos = new LinkedList<ExternalCardInfo>();
 			String searchWords = cardName;
 			searchWords = searchWords.replace(" ", "+");

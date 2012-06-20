@@ -13,12 +13,38 @@ public class CollectionCardViewDAO extends DAO {
 		List<CollectionCardView> allCollectionCards = new ArrayList<CollectionCardView>();
 		try {
 			// get connection
-		    Statement stmt = ds.getStatement();
-			ResultSet rs = stmt.executeQuery("select CollectionCard.card_id, CollectionCard.amount, CollectionCard.rarity, Card.name, Card.attribute, Price.price, Location.name as location_name from CollectionCard left outer join Card on CollectionCard.card_id = Card.id left outer join Price on CollectionCard.card_id = Price.card_id and CollectionCard.rarity = Price.rarity left outer join Location on CollectionCard.location_id = Location.id where CollectionCard.collection_id = " + id + " group by Card.name, CollectionCard.rarity");
+			Statement stmt = ds.getStatement();
+			ResultSet rs = stmt
+					.executeQuery("select "
+							+ "CollectionCard.card_id, "
+							+ "CollectionCard.amount, "
+							+ "CollectionCard.rarity, "
+							+ "Card.name, "
+							+ "Card.attribute, "
+							+ "OrderedPrice.price, "
+							+ "Location.id as location_id, "
+							+ "Location.name as location_name, "
+							+ "OrderedPrice.source_id, "
+							+ "OrderedPrice.set_id "
+							+ "from CollectionCard "
+							+ "left outer join Card "
+							+ "on CollectionCard.card_id = Card.id "
+							+ "left outer join (select * from Price order by date desc) as OrderedPrice "
+							+ "on CollectionCard.card_id = OrderedPrice.card_id "
+							+ "and CollectionCard.rarity = OrderedPrice.rarity "
+							+ "and CollectionCard.price_source_id = OrderedPrice.source_id "
+							+ "and CollectionCard.set_id = OrderedPrice.set_id "
+							+ "left outer join Location "
+							+ "on CollectionCard.location_id = Location.id "
+							+ "where CollectionCard.collection_id = " + id
+							+ " group by CollectionCard.card_id, "
+							+ "CollectionCard.rarity, "
+							+ "CollectionCard.price_source_id, "
+							+ "CollectionCard.set_id ");
 
 			// fetch all events from database
 			CollectionCardView ccv;
-			
+
 			while (rs.next()) {
 				ccv = new CollectionCardView();
 				ccv.setCollectionId(id);
@@ -28,15 +54,18 @@ public class CollectionCardViewDAO extends DAO {
 				ccv.setName(rs.getString(4));
 				ccv.setAttribute(rs.getString(5));
 				ccv.setPrice(rs.getBigDecimal(6));
-				ccv.setLocationName(rs.getString(7));
+				ccv.setLocationId(rs.getInt(7));
+				ccv.setLocationName(rs.getString(8));
+				ccv.setPriceSourceId(rs.getInt(9));
+				ccv.setSetId(rs.getString(10));
 				allCollectionCards.add(ccv);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-		    ds.close();
+			ds.close();
 		}
-		
+
 		return allCollectionCards;
 	}
 }

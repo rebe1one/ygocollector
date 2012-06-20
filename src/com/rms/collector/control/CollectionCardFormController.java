@@ -66,7 +66,8 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	    		CollectionCard cc = new CollectionCard(id, 
 	    				card.getId(), amount.getValue(), 
 	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity(),
-	    				((Location)location.getSelectedItem().getValue()).getId());
+	    				((Location)location.getSelectedItem().getValue()).getId(),
+	    				0, "");
 	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
 	    		filters = new ArrayList<Filter>();
 	    		filters.add(new Filter("collection_id", cc.getCollectionId()));
@@ -116,7 +117,8 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	    		CollectionCard cc = new CollectionCard(id, 
 	    				card.getId(), amount.getValue(), 
 	    				((Rarity)rarity.getSelectedItem().getValue()).getRarity(),
-	    				((Location)location.getSelectedItem().getValue()).getId());
+	    				((Location)location.getSelectedItem().getValue()).getId(),
+	    				0, "");
 	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
 	    		filters = new ArrayList<Filter>();
 	    		filters.add(new Filter("collection_id", cc.getCollectionId()));

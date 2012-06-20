@@ -5,9 +5,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.select.SelectorComposer;
-import org.zkoss.zk.ui.select.annotation.Listen;
-import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -15,16 +14,24 @@ import org.zkoss.zul.Window;
 import com.rms.collector.data.UserLoginDAO;
 import com.rms.collector.model.UserLogin;
 
-public class LoginViewController extends SelectorComposer<Window> {
-	@Wire
-    private Textbox nameTxb, passwordTxb;
+public class LoginViewController extends GenericForwardComposer<Window> {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Textbox nameTxb, passwordTxb;
     
-    @Wire
     private Label mesgLbl;
     
-    @Listen("onClick=#confirmBtn")
-    public void confirm() {
+    private Button confirmBtn;
+    
+    public void onClick$confirmBtn() {
         doLogin();
+    }
+    
+    public void onOK$loginWin() {
+    	doLogin();
     }
     
     private boolean doLogin() {
@@ -42,7 +49,8 @@ public class LoginViewController extends SelectorComposer<Window> {
     		
     		if (userLogin.getPassword().equals(hashStr)) {
     			UserCredentialManager.getInstance().authenticate(userLogin);
-    			mesgLbl.setValue("Success!");
+    			confirmBtn.setImage("/images/icons/lock_open.png");
+    			mesgLbl.setValue("Loading");
     			Executions.sendRedirect("/home.zul");
     		}
     		return false;
@@ -54,7 +62,6 @@ public class LoginViewController extends SelectorComposer<Window> {
     
     public void doAfterCompose(Window window) throws Exception {
         super.doAfterCompose(window);
-     
-        //to be implemented, let’s check for a login
+        confirmBtn.setImage("/images/icons/lock.png");
     }
 }
