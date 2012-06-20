@@ -75,13 +75,17 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	    		filters.add(Filter.AND);
 	    		filters.add(new Filter("rarity", cc.getRarity()));
 	    		CollectionCard collectionCard = ccDAO.findSingle(filters);
+	    		CollectionCardView ccv = null;
 	    		if (Util.isNotEmpty(collectionCard)) {
 	    			collectionCard.setAmount(collectionCard.getAmount() + amount.getValue());
 	    			ccDAO.update(collectionCard);
+	    			ccv = CollectionCardView.createViewFromCard(collectionCard);
 	    		} else {
 	    			ccDAO.insert(cc);
+	    			ccv = CollectionCardView.createViewFromCard(cc);
 	    		}
-	    		new CardManager(card.getName()).start();
+	    		ccv.setName(cardName.getValue());
+	    		PriceLookupQueue.getInstance().addCard(ccv);
 	    		cardName.setValue("");
 	    		amount.setValue(1);
 	    		cardName.setFocus(true);
@@ -89,14 +93,7 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	    		mesgLbl.setValue("Please enter a card name.");
 	    	}
 			cardDAO.commmitTransaction();
-			
-			CollectionCardViewDAO dao = new CollectionCardViewDAO();
-	    	List<CollectionCardView> visits = dao.findByCollectionId(id);
-	    	((Listbox)this.arg.get("collectionCardList")).setModel(new ListModelList<CollectionCardView>(visits));
-	    	
-	    	CollectionManager cm = new CollectionManager(id);
-	    	((Label)this.arg.get("collectionTotalValueField")).setValue(cm.getTotalPrice().toPlainString());
-	    	((Label)this.arg.get("collectionHighestValueField")).setValue(cm.getHighestPrice().toPlainString());
+			mesgLbl.setValue("");
     	} catch (Exception e) {
     		e.printStackTrace();
     		mesgLbl.setValue("An error has occurred.");
@@ -128,13 +125,17 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	    		filters.add(Filter.AND);
 	    		filters.add(new Filter("rarity", cc.getRarity()));
 	    		CollectionCard collectionCard = ccDAO.findSingle(filters);
+	    		CollectionCardView ccv = null;
 	    		if (Util.isNotEmpty(collectionCard)) {
 	    			collectionCard.setAmount(collectionCard.getAmount() + amount.getValue());
 	    			ccDAO.update(collectionCard);
+	    			ccv = CollectionCardView.createViewFromCard(collectionCard);
 	    		} else {
 	    			ccDAO.insert(cc);
+	    			ccv = CollectionCardView.createViewFromCard(cc);
 	    		}
-	    		new CardManager(card.getName()).start();
+	    		ccv.setName(cardName.getValue());
+	    		PriceLookupQueue.getInstance().addCard(ccv);
 	    		createCollectionCardWin.detach();
 	    	} else {
 	    		mesgLbl.setValue("Please enter a card name.");

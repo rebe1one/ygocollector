@@ -78,7 +78,8 @@
 					<box id="collectionBox" width="100%" visible="false">
 					<toolbar width="100%" height="22px">
 						<toolbarbutton id="addCollectionCard" label="Add Card" image="/images/icons/add.png"/>
-						<toolbarbutton id="refreshCollectionPrices" label="Refresh Prices" image="/images/icons/action_refresh.gif"/>
+						<toolbarbutton id="refreshAllCollectionPrices" label="Refresh Prices" image="/images/icons/action_refresh.gif"/>
+						<toolbarbutton id="refreshMissingCollectionPrices" label="Refresh Prices" image="/images/icons/action_refresh.gif"/>
 						<toolbarbutton id="removeCollection" label="Remove Collection" image="/images/icons/action_stop.gif"/>
 					</toolbar>
 						<groupbox mold="3d" width="100%">

@@ -2,6 +2,7 @@ package com.rms.collector.control;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.zkoss.zk.ui.Component;
@@ -139,15 +140,28 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 			    );
     }
 	
-	public void onClick$refreshCollectionPrices() {
+	public void onClick$refreshAllCollectionPrices() {
     	// popup create collection form
 		HashMap<String, Object> args = new HashMap<String, Object>();
 		int id = getSelectedCollectionId();
 		args.put("collectionId", id);
 		CollectionCardViewDAO dao = new CollectionCardViewDAO();
     	List<CollectionCardView> cards = dao.findByCollectionId(id);
-    	CardManager manager = new CardManager(cards);
-    	manager.start();
+    	PriceLookupQueue.getInstance().addCards(cards);
+    }
+	
+	public void onClick$refreshMissingCollectionPrices() {
+    	// popup create collection form
+		HashMap<String, Object> args = new HashMap<String, Object>();
+		int id = getSelectedCollectionId();
+		args.put("collectionId", id);
+		CollectionCardViewDAO dao = new CollectionCardViewDAO();
+    	List<CollectionCardView> cards = dao.findByCollectionId(id);
+    	LinkedList<CollectionCardView> noPrice = new LinkedList<CollectionCardView>();
+    	for (CollectionCardView ccv : cards)
+    		if (Util.isEmpty(ccv.getPrice()))
+    			noPrice.add(ccv);
+    	PriceLookupQueue.getInstance().addCards(noPrice);
     }
 	
 	private int getSelectedCollectionId() {
