@@ -45,7 +45,7 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 	
 	private Button addCollectionCard, refreshCollectionPrices, removeCollection;
 	
-	private Label collectionNameField, collectionTotalValueField, collectionHighestValueField, welcomeLabel;
+	private Label collectionNameField, collectionTotalValueField, collectionHighestValueField, collectionTotalNumberField, welcomeLabel;
 	
 	private Grid collectionInfo;
 	
@@ -165,6 +165,7 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 	    	collectionTotalValueField.setValue(cm.getTotalPrice().toPlainString());
 	    	collectionHighestValueField.setValue(cm.getHighestPrice().toPlainString());
 	    	collectionNameField.setValue(cm.getCollectionName());
+	    	collectionTotalNumberField.setValue(cm.getTotalNumberOfCards().toString());
 	    	
 	    	showCollectionInfo();
     	} else {

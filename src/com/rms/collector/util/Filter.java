@@ -48,7 +48,7 @@ public class Filter {
 		StringBuilder b = new StringBuilder();
 		b.append(key);
 		b.append(" = '");
-		b.append(value);
+		b.append(value.toString().replace("'", "''"));
 		b.append("'");
 		return b.toString();
 	}

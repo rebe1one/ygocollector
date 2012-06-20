@@ -12,10 +12,25 @@ import com.rms.collector.util.Util;
 
 public class CollectionManager {
 	private Collection c;
+	private BigDecimal totalPrice;
+	private BigDecimal largestPrice;
+	private Integer totalCards;
 	
 	public CollectionManager(int id) {
 		CollectionDAO dao = new CollectionDAO();
 		c = dao.findSingle(Filter.simpleFilter("id", id));
+		CollectionCardViewDAO ccv = new CollectionCardViewDAO();
+		List<CollectionCardView> cards = ccv.findByCollectionId(c.getId());
+		totalPrice = BigDecimal.ZERO;
+		largestPrice = BigDecimal.ZERO;
+		totalCards = 0;
+		for (CollectionCardView card : cards) {
+			if (Util.isNotEmpty(card.getPrice()))
+				totalPrice = totalPrice.add(card.getPrice().multiply(BigDecimal.valueOf(Double.valueOf(card.getAmount()))));
+			if (Util.isNotEmpty(card.getPrice()) && largestPrice.compareTo(card.getPrice()) < 0)
+				largestPrice = card.getPrice();
+			totalCards += card.getAmount();
+		}
 	}
 	
 	public String getCollectionName() {
@@ -23,25 +38,14 @@ public class CollectionManager {
 	}
 	
 	public BigDecimal getTotalPrice() {
-		CollectionCardViewDAO ccv = new CollectionCardViewDAO();
-		List<CollectionCardView> cards = ccv.findByCollectionId(c.getId());
-		BigDecimal total = BigDecimal.ZERO;
-		for (CollectionCardView card : cards) {
-			if (Util.isNotEmpty(card.getPrice()))
-				total = total.add(card.getPrice().multiply(BigDecimal.valueOf(Double.valueOf(card.getAmount()))));
-		}
-		return total;
+		return totalPrice;
 	}
 	
 	public BigDecimal getHighestPrice() {
-		CollectionCardViewDAO ccv = new CollectionCardViewDAO();
-		List<CollectionCardView> cards = ccv.findByCollectionId(c.getId());
-		BigDecimal largest = BigDecimal.ZERO;
-		for (CollectionCardView card : cards) {
-			if (Util.isNotEmpty(card.getPrice()) && largest.compareTo(card.getPrice()) < 0) {
-				largest = card.getPrice();
-			}
-		}
-		return largest;
+		return largestPrice;
+	}
+	
+	public Integer getTotalNumberOfCards() {
+		return totalCards;
 	}
 }

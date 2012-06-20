@@ -58,12 +58,10 @@
 							<listbox id="locationList" height="245px" style="margin: 5px;"
 								emptyMessage="No items match your search">
 								<listhead>
-									<listheader label="ID" sort="auto(id)" />
 									<listheader label="Name" sort="auto(name)" />
 								</listhead>
 								<template name="model">
 									<listitem>
-										<listcell label="${each.getId()}" />
 										<listcell label="${each.getName()}" />
 									</listitem>
 								</template>
@@ -98,6 +96,10 @@
 	                                <row>
 	                                    <cell sclass="head"><label>Highest Value Card</label></cell>
 	                                    <label id="collectionHighestValueField"/>
+	                                </row>
+	                                <row>
+	                                    <cell sclass="head"><label>Number of Cards</label></cell>
+	                                    <label id="collectionTotalNumberField"/>
 	                                </row>
 	                            </rows>
 	                        </grid>

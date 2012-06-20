@@ -148,6 +148,7 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	    	CollectionManager cm = new CollectionManager(id);
 	    	((Label)this.arg.get("collectionTotalValueField")).setValue(cm.getTotalPrice().toPlainString());
 	    	((Label)this.arg.get("collectionHighestValueField")).setValue(cm.getHighestPrice().toPlainString());
+	    	mesgLbl.setValue("");
     	} catch (Exception e) {
     		e.printStackTrace();
     		mesgLbl.setValue("An error has occurred.");
