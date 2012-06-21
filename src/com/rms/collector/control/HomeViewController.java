@@ -150,6 +150,43 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
     	PriceLookupQueue.getInstance().addCards(cards);
     }
 	
+	public void onClick$cleanupSomeShit() {
+    	// popup create collection form
+		HashMap<String, Object> args = new HashMap<String, Object>();
+		int id = getSelectedCollectionId();
+		args.put("collectionId", id);
+		LinkedList<Filter> filters = new LinkedList<Filter>();
+		filters.add(new Filter("set_id", "", true));
+		CollectionCardDAO dao = new CollectionCardDAO();
+		List<CollectionCard> cards = dao.find(filters);
+		for (CollectionCard card : cards) {
+			filters = new LinkedList<Filter>();
+			filters.add(new Filter("card_id", card.getCardId()));
+			filters.add(Filter.AND);
+			filters.add(new Filter("collection_id", card.getCollectionId()));
+			filters.add(Filter.AND);
+			filters.add(new Filter("amount", card.getAmount()));
+			filters.add(Filter.AND);
+			filters.add(new Filter("rarity", card.getRarity()));
+			filters.add(Filter.AND);
+			filters.add(new Filter("location_id", card.getLocationId()));
+			filters.add(Filter.AND);
+			filters.add(new Filter("price_source_id", card.getPriceSourceId()));
+			filters.add(Filter.AND);
+			filters.add(new Filter("set_id", ""));
+			List<CollectionCard> cards2 = dao.find(filters);
+			for (CollectionCard c : cards2) {
+				System.out.println(c.toString());
+				try {
+					dao.delete(c);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("DONE");
+		}
+    }
+	
 	public void onClick$refreshMissingCollectionPrices() {
     	// popup create collection form
 		HashMap<String, Object> args = new HashMap<String, Object>();

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rms.collector.model.Price;
+import com.rms.collector.model.view.PriceSourceView;
 import com.rms.collector.util.Filter;
 import com.rms.collector.util.Util;
 
@@ -61,6 +62,37 @@ public class PriceDAO extends DAO implements iDAO<Price> {
 				price.setDate(rs.getTimestamp(5));
 				price.setRarity(rs.getString(6));
 				price.setSetId(rs.getString(7));
+				allPrices.add(price);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+		    ds.close();
+		}
+		
+		return allPrices;
+	}
+	
+	public List<PriceSourceView> findLatestCardPrices(int card_id, String rarity) {
+		String query = "select p.*, s.name as source_name from (select * from Price order by date desc) p join Source as s on p.source_id = s.id where card_id = " + card_id + " and rarity = '" + rarity + "' group by rarity, set_id";
+		List<PriceSourceView> allPrices = new ArrayList<PriceSourceView>();
+		try {
+			// get connection
+		    Statement stmt = ds.getStatement();
+			ResultSet rs = stmt.executeQuery(query);
+
+			PriceSourceView price;
+			
+			while (rs.next()) {
+				price = new PriceSourceView();
+				price.setCardId(rs.getInt(1));
+		        price.setSourceId(rs.getInt(2));
+				price.setEdition(rs.getString(3));
+				price.setPrice(rs.getBigDecimal(4));
+				price.setDate(rs.getTimestamp(5));
+				price.setRarity(rs.getString(6));
+				price.setSetId(rs.getString(7));
+				price.setSourceName(rs.getString(8));
 				allPrices.add(price);
 			}
 		} catch (SQLException e) {

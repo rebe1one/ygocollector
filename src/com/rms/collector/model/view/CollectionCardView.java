@@ -6,7 +6,6 @@ import com.rms.collector.model.CollectionCard;
 
 public class CollectionCardView extends CollectionCard {
 	private String name;
-	private int amount;
 	private String attribute;
 	private BigDecimal price;
 	private String locationName;
@@ -37,12 +36,6 @@ public class CollectionCardView extends CollectionCard {
 	}
 	public void setAttribute(String attribute) {
 		this.attribute = attribute;
-	}
-	public int getAmount() {
-		return amount;
-	}
-	public void setAmount(int amount) {
-		this.amount = amount;
 	}
 	public String getLocationName() {
 		return locationName;

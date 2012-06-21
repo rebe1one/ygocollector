@@ -6,6 +6,7 @@ import java.util.List;
 public class Filter {
 	protected String key;
 	protected Object value;
+	protected boolean notEqual;
 	
 	public static Filter AND = new Filter("AND", "AND");
 	public static Filter OR = new Filter("OR", "OR");
@@ -15,6 +16,12 @@ public class Filter {
 	public Filter(String key, Object value) {
 		this.key = key;
 		this.value = value;
+	}
+	
+	public Filter(String key, Object value, boolean notEqual) {
+		this.key = key;
+		this.value = value;
+		this.notEqual = notEqual;
 	}
 
 	public String getKey() {
@@ -47,7 +54,8 @@ public class Filter {
 	public String toString() {
 		StringBuilder b = new StringBuilder();
 		b.append(key);
-		b.append(" = '");
+		if (notEqual) b.append(" <> '");
+		else b.append(" = '");
 		b.append(value.toString().replace("'", "''"));
 		b.append("'");
 		return b.toString();

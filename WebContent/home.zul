@@ -81,6 +81,7 @@
 						<toolbarbutton id="refreshAllCollectionPrices" label="Refresh All Prices" image="/images/icons/action_refresh.gif"/>
 						<toolbarbutton id="refreshMissingCollectionPrices" label="Lookup Missing Prices" image="/images/icons/magnifier.png"/>
 						<toolbarbutton id="removeCollection" label="Remove Collection" image="/images/icons/action_stop.gif"/>
+						<toolbarbutton id="cleanupSomeShit" label="Cleanup Some Shit" image="/images/icons/action_stop.gif"/>
 					</toolbar>
 						<groupbox mold="3d" width="100%">
 		                    <caption label="Collection Info" />
@@ -110,13 +111,13 @@
 							<listbox id="collectionCardList" height="500px;" hflex="1" style="margin: 5px;"
 								emptyMessage="No items match your search">
 								<listhead>
-									<listheader label="ID" sort="auto(card_id)" />
+									<listheader label="ID" sort="auto(cardId)" />
 									<listheader label="Name" sort="auto(name)" />
-									<listheader label="Rarity" sort="auto(rarity))" />
+									<listheader label="Rarity" sort="auto(rarity)" />
 									<listheader label="Amount" sort="auto(amount)" />
 									<listheader label="Attribute" sort="auto(attribute)" />
 									<listheader label="Price" sort="auto(price)" />
-									<listheader label="Location" sort="auto(location_name)" />
+									<listheader label="Location" sort="auto(locationName)" />
 									<listheader label="Edit" sort="none"/>
 								</listhead>
 								<template name="model">

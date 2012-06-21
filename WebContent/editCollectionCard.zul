@@ -1,36 +1,56 @@
 <?page title="Collector"?>
-<window id="editCollectionCardWin" border="normal" width="500px"
+<window id="editCollectionCardWin" border="normal" width="700px"
     title="Edit collection card"
     apply="com.rms.collector.control.EditCollectionCardFormController" mode="overlapped"
     position="center,center" closable="true">
-    <grid>
-        <rows>
-            <row>
-                Card Name:
-                <label id="cardName" />
-            </row>
-            <row>
-            	Amount:
-            	<spinner id="amount" value="1" constraint="no empty" />
-            </row>
-            <row>
-                Rarity:
-                <listbox id="rarity" mold="select">
-                	<template name="model">
-						<listitem label="${each.getDescription()}"/>
-					</template>
-                </listbox>
-            </row>
-            <row>
-            	Location:
-            	<listbox id="location" mold="select">
-                	<template name="model">
-						<listitem label="${each.getName()}"/>
-					</template>
-                </listbox>
-            </row>
-        </rows>
-    </grid>
+    <hlayout hflex="1">
+	    <image id="cardImage" width="200px" height="295px"/>
+	    <vlayout hflex="1">
+		    <grid hflex="1">
+		        <rows>
+		            <row>
+		                Card Name:
+		                <label id="cardName" />
+		            </row>
+		            <row>
+		            	Amount:
+		            	<spinner id="amount" value="1" constraint="no empty" />
+		            </row>
+		            <row>
+		                Rarity:
+		                <listbox id="rarity" mold="select">
+		                	<template name="model">
+								<listitem label="${each.getDescription()}"/>
+							</template>
+		                </listbox>
+		            </row>
+		            <row>
+		            	Location:
+		            	<listbox id="location" mold="select">
+		                	<template name="model">
+								<listitem label="${each.getName()}"/>
+							</template>
+		                </listbox>
+		            </row>
+		        </rows>
+		    </grid>
+		    <listbox id="priceList" checkmark="true" hflex="1"
+				emptyMessage="No items match your search">
+				<listhead>
+					<listheader label="Price" sort="auto(price)" />
+					<listheader label="Set ID" sort="auto(set_id)" />
+					<listheader label="Source" sort="auto(source_name)" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${each.getPrice()}" />
+						<listcell label="${each.getSetId()}" />
+						<listcell label="${each.getSourceName()}" />
+					</listitem>
+				</template>
+			</listbox>
+	    </vlayout>
+    </hlayout>
     <button id="confirm" label="Save" />
     <label id="mesgLbl" />
 </window>

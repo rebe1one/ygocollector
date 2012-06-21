@@ -10,6 +10,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listitem;
@@ -23,13 +24,16 @@ import com.rms.collector.data.CollectionCardDAO;
 import com.rms.collector.data.CollectionCardViewDAO;
 import com.rms.collector.data.CollectionDAO;
 import com.rms.collector.data.LocationDAO;
+import com.rms.collector.data.PriceDAO;
 import com.rms.collector.data.RarityDAO;
 import com.rms.collector.model.Card;
 import com.rms.collector.model.Collection;
 import com.rms.collector.model.CollectionCard;
 import com.rms.collector.model.Location;
+import com.rms.collector.model.Price;
 import com.rms.collector.model.Rarity;
 import com.rms.collector.model.view.CollectionCardView;
+import com.rms.collector.model.view.PriceSourceView;
 import com.rms.collector.util.Filter;
 import com.rms.collector.util.Util;
 
@@ -40,10 +44,11 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
 	 */
 	private static final long serialVersionUID = 1L;
 	private Label cardName;
-	private Listbox rarity, location;
+	private Listbox rarity, location, priceList;
 	private Spinner amount;
 	private Window editCollectionCardWin;
     private Label mesgLbl;
+    private Image cardImage;
     
     public void onClick$confirm(Event event) {
         editCollectionCard();
@@ -99,10 +104,21 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
     	}
     }
     
+    private static String generateImageUrl(String set_id) {
+    	StringBuilder b = new StringBuilder("http://ycg.chakra42.net/images/");
+    	String[] set_broken = set_id.split("\\-", 2);
+    	b.append(set_broken[0].toLowerCase());
+    	b.append("/");
+    	b.append(set_id.toUpperCase());
+    	b.append(".jpg");
+    	return b.toString();
+    }
+    
     @Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
 		final CollectionCardView ccv = (CollectionCardView)this.arg.get("collectionCardView");
+		cardImage.setSrc(generateImageUrl(ccv.getSetId()));
 		RarityDAO rDAO = new RarityDAO();
 		List<Rarity> rarities = rDAO.findAll();
 		ListModelList<Rarity> model = new ListModelList<Rarity>(rarities);
@@ -127,6 +143,17 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
 		location.setModel(locationModel);
 		cardName.setValue(ccv.getName());
 		amount.setValue(ccv.getAmount());
+		
+		List<PriceSourceView> prices = new PriceDAO().findLatestCardPrices(ccv.getCardId(), ccv.getRarity());
+		ListModelList<PriceSourceView> priceModel = new ListModelList<PriceSourceView>(prices);
+		List<PriceSourceView> priceSelection = new LinkedList<PriceSourceView>();
+		for (PriceSourceView p : priceModel) {
+			if (p.getSetId().equals(ccv.getSetId())) {
+				priceSelection.add(p);
+			}
+		}
+		priceModel.setSelection(priceSelection);
+		priceList.setModel(priceModel);
 	}
     
 }

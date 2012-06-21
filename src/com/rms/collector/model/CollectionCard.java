@@ -1,13 +1,13 @@
 package com.rms.collector.model;
 
 public class CollectionCard {
-	private int collectionId;
-	private int cardId;
-	private int amount;
-	private String rarity;
-	private int locationId;
-	private int priceSourceId;
-	private String setId = "";
+	protected int collectionId;
+	protected int cardId;
+	protected int amount;
+	protected String rarity;
+	protected int locationId;
+	protected int priceSourceId;
+	protected String setId = "";
 	public CollectionCard() {
 		super();
 	}
@@ -63,5 +63,15 @@ public class CollectionCard {
 	}
 	public void setSetId(String setId) {
 		this.setId = setId;
+	}
+	public String toString() {
+		return "CollectionCard = " + 
+				"collection_id:'" + this.collectionId + "'" +
+				"card_id:'" + this.cardId + "'" +
+				"amount:'" + this.amount + "'" +
+				"rarity:'" + this.rarity + "'" +
+				"locationId:'" + this.locationId + "'" +
+				"priceSourceId:'" + this.priceSourceId + "'" +
+				"set_id:'" + this.setId + "'";
 	}
 }
