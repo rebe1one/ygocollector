@@ -156,7 +156,7 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 		int id = getSelectedCollectionId();
 		args.put("collectionId", id);
 		LinkedList<Filter> filters = new LinkedList<Filter>();
-		filters.add(new Filter("set_id", "", true));
+		filters.add(new Filter("set_id", "", Filter.Equality.NOTEQUALS));
 		CollectionCardDAO dao = new CollectionCardDAO();
 		List<CollectionCard> cards = dao.find(filters);
 		for (CollectionCard card : cards) {

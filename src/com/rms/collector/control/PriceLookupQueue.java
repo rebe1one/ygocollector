@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,7 +25,9 @@ import com.rms.collector.model.ExternalCardInfo;
 import com.rms.collector.model.Price;
 import com.rms.collector.model.Rarity;
 import com.rms.collector.model.view.CollectionCardView;
+import com.rms.collector.model.view.PriceSourceView;
 import com.rms.collector.util.Filter;
+import com.rms.collector.util.OrderFilter;
 import com.rms.collector.util.Util;
 
 public class PriceLookupQueue implements ThreadCompleteListener {
@@ -93,7 +96,21 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 		public void doRun() {
 			if (cards != null) {
 				for (CollectionCardView ccv : cards) {
-					processCard(ccv);
+					PriceDAO pDAO = new PriceDAO();
+					List<Filter> filters = Filter.begin();
+					filters.add(new Filter("card_id", ccv.getCardId()));
+					filters.add(new OrderFilter("date", OrderFilter.DESC));
+					List<Price> priceList = pDAO.find(filters);
+					for (Price p : priceList) {
+						if (p.getSourceId() != 1 && Util.getCurrentTimestamp().getTime() - p.getDate().getTime() > (long)60*60*24*1000) {
+							System.out.println(new Timestamp(Util.getCurrentTimestamp().getTime()));
+							System.out.println(new Timestamp(p.getDate().getTime()));
+							System.out.println((long)60*60*24*1000);
+							System.out.println("");
+							//processCard(ccv);
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -143,8 +160,8 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 	                                new InputStreamReader(
 	                                yc.getInputStream()));
 	        String inputLine;
-	        Pattern regularCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+) - ([a-zA-Z ]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
-	        Pattern ultimateCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z ]+) - ([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
+	        Pattern regularCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+) - ([a-zA-Z ]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-&\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
+	        Pattern ultimateCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z ]+) - ([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-&\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
 	        while ((inputLine = in.readLine()) != null) {
 	        	Matcher regexMatcher = regularCardExpr.matcher(inputLine);
 	        	while (regexMatcher.find()) {

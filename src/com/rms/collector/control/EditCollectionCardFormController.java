@@ -1,9 +1,12 @@
 package com.rms.collector.control;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -54,6 +57,13 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
         editCollectionCard();
     }
     
+    public void onClick$newPrice(Event event) {
+    	HashMap<String, Object> args = new HashMap<String, Object>();
+		args.put("collectionCardView", this.arg.get("collectionCardView"));
+		args.put("priceList", priceList);
+		Executions.createComponents("createPrice.zul", null, args);
+    }
+    
     public void onOK$editCollectionCardWin() {
     	editCollectionCard();
     }
@@ -65,24 +75,16 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
     	final CollectionCardView ccv = (CollectionCardView)this.arg.get("collectionCardView");
     	try {
 			if (!Util.isEmpty(cardName.getValue()) && rarity.getSelectedCount() > 0) {
-				List<Filter> filters = new ArrayList<Filter>();
-				filters.add(new Filter("name", cardName.getValue()));
 	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
-	    		filters = new ArrayList<Filter>();
-	    		filters.add(new Filter("collection_id", id));
-	    		filters.add(Filter.AND);
-	    		filters.add(new Filter("card_id", ccv.getCardId()));
-	    		filters.add(Filter.AND);
-	    		filters.add(new Filter("rarity", ccv.getRarity()));
-	    		CollectionCard collectionCard = ccDAO.findSingle(filters);
-	    		if (Util.isNotEmpty(collectionCard)) {
-	    			collectionCard.setAmount(amount.getValue());
-	    			collectionCard.setLocationId(((Location)location.getSelectedItem().getValue()).getId());
-	    			collectionCard.setRarity(((Rarity)rarity.getSelectedItem().getValue()).getRarity());
-	    			ccDAO.update(collectionCard);
-	    		} else {
-	    			mesgLbl.setValue("Could not find card.");
+	    		ccDAO.delete(ccv);
+	    		ccv.setAmount(amount.getValue());
+	    		ccv.setLocationId(((Location)location.getSelectedItem().getValue()).getId());
+	    		if (Util.isNotEmpty(priceList.getSelectedItem())) {
+	    			PriceSourceView psv = (PriceSourceView)priceList.getSelectedItem().getValue();
+	    			ccv.setPriceSourceId(psv.getSourceId());
+	    			ccv.setSetId(psv.getSetId());
 	    		}
+	    		ccDAO.insert(ccv);
 	    		//new CardManager(ccv.getName()).start();
 	    		editCollectionCardWin.detach();
 	    	} else {

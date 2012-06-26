@@ -49,6 +49,9 @@
 					</listitem>
 				</template>
 			</listbox>
+			<div style="float: right;">
+				<button id="newPrice" label="New Price"/>
+			</div>
 	    </vlayout>
     </hlayout>
     <button id="confirm" label="Save" />

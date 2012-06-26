@@ -81,7 +81,7 @@
 						<toolbarbutton id="refreshAllCollectionPrices" label="Refresh All Prices" image="/images/icons/action_refresh.gif"/>
 						<toolbarbutton id="refreshMissingCollectionPrices" label="Lookup Missing Prices" image="/images/icons/magnifier.png"/>
 						<toolbarbutton id="removeCollection" label="Remove Collection" image="/images/icons/action_stop.gif"/>
-						<toolbarbutton id="cleanupSomeShit" label="Cleanup Some Shit" image="/images/icons/action_stop.gif"/>
+						<toolbarbutton id="cleanupSomeShit" disabled="true" label="Cleanup Some Shit" image="/images/icons/action_stop.gif"/>
 					</toolbar>
 						<groupbox mold="3d" width="100%">
 		                    <caption label="Collection Info" />
