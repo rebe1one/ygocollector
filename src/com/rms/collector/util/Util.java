@@ -28,6 +28,7 @@ public class Util {
 	
 	public static String filterToSQL(List<Filter> filter) {
 		StringBuilder b = new StringBuilder();
+		String orderBy = null;
 		for (Filter entry : filter) {
 			if (entry.equals(Filter.AND)) {
 				b.append(" AND ");
@@ -41,9 +42,13 @@ public class Util {
 			} else if (entry.equals(Filter.RB)) {
 				b.append(") ");
 				continue;
+			} else if (entry.getClass().isInstance(OrderFilter.class)) {
+				orderBy = entry.toString();
+				continue;
 			}
 			b.append(entry.toString());
 		}
+		if (orderBy != null) b.append(orderBy);
 		return b.toString();
 	}
 	
@@ -54,5 +59,9 @@ public class Util {
 		}
 		System.out.println(query);
 		return query;
+	}
+	
+	public static String sqlFilter(String in) {
+		return in.replace("'", "''");
 	}
 }

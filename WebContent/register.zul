@@ -7,11 +7,11 @@
         <rows>
             <row>
                 First Name:
-                <textbox id="firstNameTxb" />
+                <textbox id="firstNameTxb" focus="true" constraint="no empty"/>
             </row>
             <row>
        			Last Name:
-	            <textbox id="lastNameTxb" />
+	            <textbox id="lastNameTxb" constraint="no empty"/>
 	        </row>
             <row>
        			Email:
@@ -19,14 +19,16 @@
 	        </row>
 	        <row>
        			User login:
-	            <textbox id="userLoginTxb" />
+	            <textbox id="userLoginTxb" constraint="no empty"/>
 	        </row>
             <row>
                 Password:
-                <textbox id="passwordTxb" type="password" />
+                <textbox id="passwordTxb" type="password" constraint="no empty"/>
             </row>
         </rows>
     </grid>
-    <button id="confirmBtn" label="confirm" />
-    <label id="mesgLbl" />
+    <div style="float: right;">
+    	<label id="mesgLbl" />
+	    <button id="confirmBtn" label="Register" image="/images/icons/tick.png"/>
+    </div>
 </window>

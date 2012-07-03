@@ -1,0 +1,32 @@
+<?page title="Collector"?>
+<window id="newPriceWin" border="normal" width="500px"
+    title="New price"
+    apply="com.rms.collector.control.PriceFormController" mode="modal"
+    position="center,center" closable="true">
+    <grid>
+        <rows>
+            <row>
+                Price:
+                <textbox id="price" />
+            </row>
+            <row>
+                Set ID:
+                <combobox id="set" mold="default">
+                	<template name="model">
+						<comboitem label="${each.getSetId()}"/>
+					</template>
+                </combobox>
+            </row>
+            <row>
+                Source:
+                <listbox id="source" mold="select">
+                	<template name="model">
+						<listitem label="${each.getName()}"/>
+					</template>
+                </listbox>
+            </row>
+        </rows>
+    </grid>
+    <button id="confirm" label="Create" />
+    <label id="mesgLbl" />
+</window>

@@ -27,11 +27,10 @@ public class CardDAO extends DAO implements iDAO<Card> {
 				card = new Card();
 				card.setId(rs.getInt(1));
 		        card.setName(rs.getString(2));
-				card.setSetId(rs.getString(3));
-				card.setCardNumber(rs.getInt(4));
-				card.setStars(rs.getInt(5));
-				card.setDescription(rs.getString(6));
-				card.setAttribute(rs.getString(7));
+				card.setCardNumber(rs.getInt(3));
+				card.setStars(rs.getInt(4));
+				card.setDescription(rs.getString(5));
+				card.setAttribute(rs.getString(6));
 				allCards.add(card);
 			}
 		} catch (SQLException e) {
@@ -88,16 +87,16 @@ public class CardDAO extends DAO implements iDAO<Card> {
 	@Override
 	public Boolean insert(Card card) throws SQLException {
 		return execute("INSERT INTO Card(name,set_id,card_number,stars,description,attribute) " +
-                    "VALUES ('" + card.getName() + "','" + card.getSetId() +
+                    "VALUES ('" + Util.sqlFilter(card.getName()) + "','" + Util.sqlFilter(card.getSetId()) +
                     "'," + card.getCardNumber() + "," + card.getStars() + 
-                    ",'" + card.getDescription() + "','" + card.getAttribute() + "')");
+                    ",'" + Util.sqlFilter(card.getDescription()) + "','" + card.getAttribute() + "')");
 	}
 	
 	@Override
 	public boolean update(Card card) throws SQLException {
-        return execute("UPDATE Card SET name = '" + card.getName() + 
-                    "', set_id = " + card.getSetId() + ", card_number = " + card.getCardNumber() + 
-                    ", stars = " + card.getStars() + ", description = '" + card.getDescription() + 
+        return execute("UPDATE Card SET name = '" + Util.sqlFilter(card.getName()) + 
+                    "', set_id = '" + Util.sqlFilter(card.getSetId()) + "', card_number = " + card.getCardNumber() + 
+                    ", stars = " + card.getStars() + ", description = '" + Util.sqlFilter(card.getDescription()) + 
                     "', attribute = '" + card.getAttribute() + 
                     "' where id = '" + card.getId() + "'");
     }

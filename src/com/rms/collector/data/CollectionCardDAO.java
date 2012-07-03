@@ -88,7 +88,7 @@ public class CollectionCardDAO extends DAO implements iDAO<CollectionCard> {
 				+ "' AND card_id = '" + entity.getCardId() + "' AND rarity = '" + entity.getRarity()
 				+ "' AND location_id = '" + entity.getLocationId()
 				+ "' AND price_source_id = '" + entity.getPriceSourceId()
-				+ "' AND set_id = '" + entity.getSetId() + "'");
+				+ "' AND set_id = '" + Util.sqlFilter(entity.getSetId()) + "'");
 	}
 
 	@Override

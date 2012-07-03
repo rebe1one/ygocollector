@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.rms.collector.model.Price;
@@ -75,7 +76,7 @@ public class PriceDAO extends DAO implements iDAO<Price> {
 	
 	public List<PriceSourceView> findLatestCardPrices(int card_id, String rarity) {
 		String query = "select p.*, s.name as source_name from (select * from Price order by date desc) p join Source as s on p.source_id = s.id where card_id = " + card_id + " and rarity = '" + rarity + "' group by rarity, set_id";
-		List<PriceSourceView> allPrices = new ArrayList<PriceSourceView>();
+		List<PriceSourceView> allPrices = new LinkedList<PriceSourceView>();
 		try {
 			// get connection
 		    Statement stmt = ds.getStatement();

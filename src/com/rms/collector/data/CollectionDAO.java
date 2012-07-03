@@ -108,12 +108,12 @@ public class CollectionDAO extends DAO implements iDAO<Collection> {
 	@Override
 	public Object insert(Collection entity) throws SQLException {
 		return executeReturn("INSERT INTO Collection(name,user_id) " +
-                "VALUES ('" + entity.getName() + "'," + entity.getUserId() + ")");
+                "VALUES ('" + Util.sqlFilter(entity.getName()) + "'," + entity.getUserId() + ")");
 	}
 
 	@Override
 	public boolean update(Collection entity) throws SQLException {
-		return execute("UPDATE Collection SET name = '" + entity.getName() + 
+		return execute("UPDATE Collection SET name = '" + Util.sqlFilter(entity.getName()) + 
                 "', user_id = " + entity.getUserId() + 
                 " where id = " + entity.getId());
 	}

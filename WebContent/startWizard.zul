@@ -1,0 +1,62 @@
+<?page title="Collector"?>
+<window id="startWizard" border="normal" width="900px" title="Setup Wizard" apply="com.rms.collector.control.StartWizardFormController" mode="modal" position="center,center" closable="false">
+	<style>
+		.ygo-wizard-text { line-height: 15px; }
+
+		.ygo-wizard-header { font-size: 24px; display: block; margin: 0px 0px 30px; }
+
+		.ygo-progressbar { width: 300px; margin-top: 15px; margin-left: auto; margin-right: auto; }
+	</style>
+	<hlayout>
+		<image src="/images/wizard_dmg.png" style="margin: 30px;" width="200px" height="200px"/>
+		<vlayout hflex="1">
+			<progressmeter id="wizardProgress" value="0" width="300px" sclass="ygo-progressbar" />
+			<vlayout id="step1" visible="true" hflex="1" style="padding:10px 25px 10px 0px">
+				<label sclass="ygo-wizard-header">Welcome to Yu-Gi-Oh! Collector!</label>
+				<label sclass="ygo-wizard-text">I noticed you're just getting started, lets set up some important stuff. First, in order to manage your collection, lets create it!</label>
+				<box style="margin-top:10px; margin-bottom:10px">
+					<label>Collection Name:</label>
+					<hlayout>
+						<textbox id="collectionName" value="My Collection" constraint="no empty" />
+						<image id="checkImg" visible="false" src="/images/icons/tick.png" />
+					</hlayout>
+				</box>
+				<label sclass="ygo-wizard-text">If you need to manage more than one collection, don't worry, you can create more later. Hit next to move on to the next step.</label>
+				<div style="float: right;">
+					<button id="next" label="Next" image="/images/icons/arrow_right.png" />
+				</div>
+			</vlayout>
+			<vlayout id="step2" visible="false" hflex="1" style="padding:25px">
+				<label sclass="ygo-wizard-header">Locations</label>
+				<label sclass="ygo-wizard-text">
+					When you start adding cards to your collection, you have the ability to select a location. The location represents where you store your card, and makes it more convenient for you to find out where specific cards are if your collection becomes very large.
+
+					Eg. "Blue Monster Binder", "Black Deckbox"
+				</label>
+				<box style="margin-top:10px; margin-bottom:10px">
+					<label>Location Name:</label>
+					<hlayout>
+						<textbox id="locationName" />
+						<button id="createLocation" label="Add" />
+					</hlayout>
+				</box>
+				<listbox id="locationList">
+					<listhead>
+						<listheader label="Name" />
+					</listhead>
+					<listitem label="Default Location"></listitem>
+				</listbox>
+				<div style="float: right;">
+					<button id="next2" label="Next" image="/images/icons/arrow_right.png" />
+				</div>
+			</vlayout>
+			<vlayout id="step3" visible="false" hflex="1" style="padding:25px">
+				<label sclass="ygo-wizard-header">Finished!</label>
+				<label sclass="ygo-wizard-text">You're now ready to start adding cards to your collection!</label>
+				<div style="float: right;">
+					<button id="next3" label="Start" image="/images/icons/arrow_right.png" />
+				</div>
+			</vlayout>
+		</vlayout>
+	</hlayout>
+</window>

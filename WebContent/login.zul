@@ -1,8 +1,9 @@
 <?page title="Collector - Login"?>
-<window id="loginWin" border="normal" width="300px"
+<window id="loginWin" border="normal" width="522px"
     title="Log in to Collector"
     apply="com.rms.collector.control.LoginViewController" mode="overlapped"
     position="center,center">
+    <image src="/images/ronaldo_duel.jpg" width="500px" height="351px"/>
     <grid>
         <rows>
             <row>
@@ -15,8 +16,13 @@
             </row>
         </rows>
     </grid>
-    <div style="float: right;">
-	    <label id="mesgLbl" />
-	    <button id="confirmBtn" label="Login"/>
+    <div style="clear: both;">
+	    <div style="float: left; padding: 4px 4px 4px 6px;">
+	    	<a label="Register" href="register.zul"/>
+    	</div>
+	    <div style="float: right;">
+		    <label id="mesgLbl" />
+		    <button id="confirmBtn" label="Login"/>
+	    </div>
     </div>
 </window>

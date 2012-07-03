@@ -1,0 +1,13 @@
+<?page title="Collector"?>
+<?init class="com.rms.collector.control.CheckForLogin" ?>
+<window id="ebayWin" border="normal" width="522px"
+    title="Log in to Collector"
+    apply="com.rms.collector.control.EbayViewController" mode="overlapped"
+    position="center,center">
+    <label>
+    	Linking your eBay account to your Collector account...
+    </label>
+    <grid id="stepGrid">
+    	<rows></rows>
+    </grid>
+</window>

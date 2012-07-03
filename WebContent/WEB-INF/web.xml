@@ -7,6 +7,9 @@
 		<display-name>ZK Session cleaner</display-name>
 		<listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
 	</listener>
+	<listener>
+		<listener-class>com.rms.collector.start.StartupListener</listener-class>
+	</listener>
 	<servlet>
 		<description>
 		The ZK loader for ZUML pages</description>

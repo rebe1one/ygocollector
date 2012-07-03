@@ -7,7 +7,7 @@
         <rows>
             <row>
                 Card Name:
-                <textbox id="cardName" />
+                <combobox value="" id="cardName" autodrop="true"/>
             </row>
             <row>
             	Amount:

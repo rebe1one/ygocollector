@@ -1,0 +1,105 @@
+<?page title="Collection Manager"?>
+<zk>
+<window id="Manager" border="none" width="100%" apply="com.rms.collector.control.CollectionManagerViewController">
+	<zscript>
+	import java.util.HashMap;
+	import com.rms.collector.ebay.AddItem;
+	import com.rms.collector.model.view.CollectionCardView;
+	void editCollectionCard(Object ccv) {
+		HashMap arguments = new HashMap();
+		arguments.put("collectionCardView", ccv);
+		arguments.put("collectionCardList", collectionCardList);
+		arguments.put("collectionTotalValueField", collectionTotalValueField);
+		arguments.put("collectionHighestValueField", collectionHighestValueField);
+		arguments.put("collectionId", ((CollectionCardView)ccv).getCollectionId());
+		Executions.createComponents("editCollectionCard.zul", null, arguments);
+	}
+	void listOnEbayBitch(Object ccv) {
+		AddItem lol = new AddItem();
+		lol.addItem((CollectionCardView) ccv);
+	}
+</zscript>
+	<box id="collectionBox" width="100%">
+		<groupbox mold="3d" width="100%" style="margin:5px">
+			<caption label="Collection Info" />
+			<grid width="300px" sclass="status" id="collectionInfo">
+				<rows>
+					<row>
+						<cell sclass="head">
+							<label>Name</label>
+						</cell>
+						<label id="collectionNameField" />
+					</row>
+					<row>
+						<cell sclass="head">
+							<label>Total Value</label>
+						</cell>
+						<label id="collectionTotalValueField" />
+					</row>
+					<row>
+						<cell sclass="head">
+							<label>Highest Value Card</label>
+						</cell>
+						<label id="collectionHighestValueField" />
+					</row>
+					<row>
+						<cell sclass="head">
+							<label>Number of Cards</label>
+						</cell>
+						<label id="collectionTotalNumberField" />
+					</row>
+				</rows>
+			</grid>
+		</groupbox>
+		<toolbar width="100%" height="22px">
+			<toolbarbutton id="addCollectionCard" label="Add Card" image="/images/icons/add.png" />
+			<toolbarbutton id="refreshAllCollectionPrices" label="Refresh All Prices" image="/images/icons/action_refresh.gif" />
+			<toolbarbutton id="refreshMissingCollectionPrices" label="Lookup Missing Prices" image="/images/icons/magnifier.png" />
+			<toolbarbutton id="removeCollection" label="Remove Collection" image="/images/icons/action_stop.gif" />
+		</toolbar>
+		<groupbox mold="3d" hflex="1" width="100%" style="margin:5px">
+			<caption label="Collection Cards" />
+			<listbox id="collectionCardList" height="500px;" hflex="1" style="margin: 5px;" emptyMessage="No items match your search">
+				<listhead>
+					<listheader label="ID" sort="auto(cardId)" />
+					<listheader label="Name" sort="auto(name)" />
+					<listheader label="Rarity" sort="auto(rarity)" />
+					<listheader label="Amount" sort="auto(amount)" />
+					<listheader label="Attribute" sort="auto(attribute)" />
+					<listheader label="Price" sort="auto(price)" />
+					<listheader label="Location" sort="auto(locationName)" />
+					<listheader label="Edit" sort="none" />
+					<listheader label="Ebay" sort="none" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${each.getCardId()}" />
+						<listcell label="${each.getName()}" />
+						<listcell label="${each.getRarity()}" />
+						<listcell label="${each.getAmount()}" />
+						<listcell label="${each.getAttribute()}" />
+						<listcell label="${each.getPrice()}" />
+						<listcell label="${each.getLocationName()}" />
+						<listcell>
+							<button label="Edit">
+								<attribute name="onClick">
+						                        <![CDATA[
+	editCollectionCard(self.getParent().getParent().getValue());
+]]></attribute>
+							</button>
+						</listcell>
+						<listcell>
+							<button label="List">
+								<attribute name="onClick">
+						                        <![CDATA[
+	listOnEbayBitch(self.getParent().getParent().getValue());
+]]></attribute>
+							</button>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		</groupbox>
+	</box>
+</window>
+</zk>

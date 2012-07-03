@@ -1,13 +1,17 @@
 package com.rms.collector.control;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.SelectEvent;
+import org.zkoss.zk.ui.event.SelectionEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
@@ -20,6 +24,7 @@ import org.zkoss.zul.Window;
 import org.zkoss.zul.Listbox;
 
 import com.rms.collector.data.CardDAO;
+import com.rms.collector.data.CardImageDAO;
 import com.rms.collector.data.CollectionCardDAO;
 import com.rms.collector.data.CollectionCardViewDAO;
 import com.rms.collector.data.CollectionDAO;
@@ -27,6 +32,7 @@ import com.rms.collector.data.LocationDAO;
 import com.rms.collector.data.PriceDAO;
 import com.rms.collector.data.RarityDAO;
 import com.rms.collector.model.Card;
+import com.rms.collector.model.CardImage;
 import com.rms.collector.model.Collection;
 import com.rms.collector.model.CollectionCard;
 import com.rms.collector.model.Location;
@@ -35,6 +41,7 @@ import com.rms.collector.model.Rarity;
 import com.rms.collector.model.view.CollectionCardView;
 import com.rms.collector.model.view.PriceSourceView;
 import com.rms.collector.util.Filter;
+import com.rms.collector.util.FilterList;
 import com.rms.collector.util.Util;
 
 public class EditCollectionCardFormController extends GenericForwardComposer<Window> {
@@ -54,6 +61,13 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
         editCollectionCard();
     }
     
+    public void onClick$newPrice(Event event) {
+    	HashMap<String, Object> args = new HashMap<String, Object>();
+		args.put("collectionCardView", this.arg.get("collectionCardView"));
+		args.put("priceList", priceList);
+		Executions.createComponents("createPrice.zul", null, args);
+    }
+    
     public void onOK$editCollectionCardWin() {
     	editCollectionCard();
     }
@@ -65,24 +79,17 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
     	final CollectionCardView ccv = (CollectionCardView)this.arg.get("collectionCardView");
     	try {
 			if (!Util.isEmpty(cardName.getValue()) && rarity.getSelectedCount() > 0) {
-				List<Filter> filters = new ArrayList<Filter>();
-				filters.add(new Filter("name", cardName.getValue()));
 	    		CollectionCardDAO ccDAO = new CollectionCardDAO();
-	    		filters = new ArrayList<Filter>();
-	    		filters.add(new Filter("collection_id", id));
-	    		filters.add(Filter.AND);
-	    		filters.add(new Filter("card_id", ccv.getCardId()));
-	    		filters.add(Filter.AND);
-	    		filters.add(new Filter("rarity", ccv.getRarity()));
-	    		CollectionCard collectionCard = ccDAO.findSingle(filters);
-	    		if (Util.isNotEmpty(collectionCard)) {
-	    			collectionCard.setAmount(amount.getValue());
-	    			collectionCard.setLocationId(((Location)location.getSelectedItem().getValue()).getId());
-	    			collectionCard.setRarity(((Rarity)rarity.getSelectedItem().getValue()).getRarity());
-	    			ccDAO.update(collectionCard);
-	    		} else {
-	    			mesgLbl.setValue("Could not find card.");
+	    		ccDAO.delete(ccv);
+	    		ccv.setAmount(amount.getValue());
+	    		ccv.setLocationId(((Location)location.getSelectedItem().getValue()).getId());
+	    		if (Util.isNotEmpty(priceList.getSelectedItem())) {
+	    			PriceSourceView psv = (PriceSourceView)priceList.getSelectedItem().getValue();
+	    			ccv.setPriceSourceId(psv.getSourceId());
+	    			ccv.setSetId(psv.getSetId());
 	    		}
+	    		ccv.setRarity(((Rarity)rarity.getSelectedItem().getValue()).getRarity());
+	    		ccDAO.insert(ccv);
 	    		//new CardManager(ccv.getName()).start();
 	    		editCollectionCardWin.detach();
 	    	} else {
@@ -104,21 +111,37 @@ public class EditCollectionCardFormController extends GenericForwardComposer<Win
     	}
     }
     
-    private static String generateImageUrl(String set_id) {
-    	StringBuilder b = new StringBuilder("http://ycg.chakra42.net/images/");
-    	String[] set_broken = set_id.split("\\-", 2);
-    	b.append(set_broken[0].toLowerCase());
-    	b.append("/");
-    	b.append(set_id.toUpperCase());
-    	b.append(".jpg");
-    	return b.toString();
+    private static String generateImageUrl(int card_id) {
+    	CardImageDAO dao = new CardImageDAO();
+    	CardImage image = dao.findSingle(FilterList.start("card_id", card_id, Filter.Equality.EQUALS).getList());
+    	if (Util.isNotEmpty(image)) {
+    		StringBuilder b = new StringBuilder("images/cards/");
+        	b.append(image.getImageFileName());
+        	return b.toString();
+    	} else {
+    		return "images/no_card.jpg";
+    	}
+    }
+    
+    public void onSelect$rarity(Event e) {
+    	CollectionCardView ccv = (CollectionCardView)this.arg.get("collectionCardView");
+    	List<PriceSourceView> prices = new PriceDAO().findLatestCardPrices(ccv.getCardId(), ((Rarity)rarity.getSelectedItem().getValue()).getRarity());
+		ListModelList<PriceSourceView> priceModel = new ListModelList<PriceSourceView>(prices);
+		List<PriceSourceView> priceSelection = new LinkedList<PriceSourceView>();
+		for (PriceSourceView p : priceModel) {
+			if (p.getSetId().equals(ccv.getSetId())) {
+				priceSelection.add(p);
+			}
+		}
+		priceModel.setSelection(priceSelection);
+		priceList.setModel(priceModel);
     }
     
     @Override
 	public void doAfterCompose(Window comp) throws Exception {
 		super.doAfterCompose(comp);
-		final CollectionCardView ccv = (CollectionCardView)this.arg.get("collectionCardView");
-		cardImage.setSrc(generateImageUrl(ccv.getSetId()));
+		CollectionCardView ccv = (CollectionCardView)this.arg.get("collectionCardView");
+		cardImage.setSrc(generateImageUrl(ccv.getCardId()));
 		RarityDAO rDAO = new RarityDAO();
 		List<Rarity> rarities = rDAO.findAll();
 		ListModelList<Rarity> model = new ListModelList<Rarity>(rarities);

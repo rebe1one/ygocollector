@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -33,7 +34,7 @@ public class RegisterViewController extends SelectorComposer<Window> {
     private void doRegister() {
     	try {
     		if (!Util.isEmpty(firstNameTxb.getValue()) && !Util.isEmpty(lastNameTxb.getValue())
-        			&& !Util.isEmpty(emailTxb.getValue()) && !Util.isEmpty(userLoginTxb.getValue())
+        			&& !Util.isEmpty(userLoginTxb.getValue())
         			&& !Util.isEmpty(passwordTxb.getValue())) {
         		User user = new User(firstNameTxb.getValue(), lastNameTxb.getValue(), emailTxb.getValue());
         		UserDAO userDAO = new UserDAO();
@@ -51,6 +52,7 @@ public class RegisterViewController extends SelectorComposer<Window> {
 	        		UserLoginDAO userLoginDAO = new UserLoginDAO();
 	        		userLoginDAO.insert(userLogin);
 	        		userDAO.commmitTransaction();
+	        		Executions.sendRedirect("/login.zul");
         		} catch (SQLException e) {
         			userDAO.rollbackTransaction();
         			e.printStackTrace();

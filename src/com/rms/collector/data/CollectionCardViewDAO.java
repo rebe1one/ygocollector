@@ -15,49 +15,27 @@ public class CollectionCardViewDAO extends DAO {
 			// get connection
 			Statement stmt = ds.getStatement();
 			ResultSet rs = stmt
-					.executeQuery("select "
-							+ "CollectionCard.card_id, "
-							+ "CollectionCard.amount, "
-							+ "CollectionCard.rarity, "
-							+ "Card.name, "
-							+ "Card.attribute, "
-							+ "OrderedPrice.price, "
-							+ "Location.id as location_id, "
-							+ "Location.name as location_name, "
-							+ "CollectionCard.price_source_id, "
-							+ "CollectionCard.set_id "
-							+ "from CollectionCard "
-							+ "left outer join Card "
-							+ "on CollectionCard.card_id = Card.id "
-							+ "left outer join (select * from Price order by date desc) as OrderedPrice "
-							+ "on CollectionCard.card_id = OrderedPrice.card_id "
-							+ "and CollectionCard.rarity = OrderedPrice.rarity "
-							+ "and CollectionCard.price_source_id = OrderedPrice.source_id "
-							+ "and CollectionCard.set_id = OrderedPrice.set_id "
-							+ "left outer join Location "
-							+ "on CollectionCard.location_id = Location.id "
-							+ "where CollectionCard.collection_id = " + id
-							+ " group by CollectionCard.card_id, "
-							+ "CollectionCard.rarity, "
-							+ "CollectionCard.price_source_id, "
-							+ "CollectionCard.set_id ");
+					.executeQuery("select * from CollectionCardView "
+							+ "where collection_id = " + id
+							+ " group by card_id, rarity, price_source_id, set_id ");
 
 			// fetch all events from database
 			CollectionCardView ccv;
 
 			while (rs.next()) {
 				ccv = new CollectionCardView();
-				ccv.setCollectionId(id);
-				ccv.setCardId(rs.getInt(1));
-				ccv.setAmount(rs.getInt(2));
-				ccv.setRarity(rs.getString(3));
-				ccv.setName(rs.getString(4));
-				ccv.setAttribute(rs.getString(5));
-				ccv.setPrice(rs.getBigDecimal(6));
-				ccv.setLocationId(rs.getInt(7));
-				ccv.setLocationName(rs.getString(8));
-				ccv.setPriceSourceId(rs.getInt(9));
-				ccv.setSetId(rs.getString(10));
+				ccv.setCollectionId(rs.getInt(1));
+				ccv.setCardId(rs.getInt(2));
+				ccv.setAmount(rs.getInt(3));
+				ccv.setRarity(rs.getString(4));
+				ccv.setPriceSourceId(rs.getInt(5));
+				ccv.setSetId(rs.getString(6));
+				ccv.setName(rs.getString(7));
+				ccv.setAttribute(rs.getString(8));
+				ccv.setLocationId(rs.getInt(9));
+				ccv.setLocationName(rs.getString(10));
+				ccv.setImageFileName(rs.getString(11));
+				ccv.setPrice(rs.getBigDecimal(12));
 				allCollectionCards.add(ccv);
 			}
 		} catch (SQLException e) {

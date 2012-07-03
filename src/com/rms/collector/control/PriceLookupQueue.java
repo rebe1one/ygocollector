@@ -7,7 +7,9 @@ import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,7 +26,10 @@ import com.rms.collector.model.ExternalCardInfo;
 import com.rms.collector.model.Price;
 import com.rms.collector.model.Rarity;
 import com.rms.collector.model.view.CollectionCardView;
+import com.rms.collector.model.view.PriceSourceView;
 import com.rms.collector.util.Filter;
+import com.rms.collector.util.FilterList;
+import com.rms.collector.util.OrderFilter;
 import com.rms.collector.util.Util;
 
 public class PriceLookupQueue implements ThreadCompleteListener {
@@ -93,19 +98,41 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 		public void doRun() {
 			if (cards != null) {
 				for (CollectionCardView ccv : cards) {
-					processCard(ccv);
+					PriceDAO pDAO = new PriceDAO();
+					List<Filter> filters = Filter.begin();
+					filters.add(new Filter("card_id", ccv.getCardId()));
+					filters.add(new OrderFilter("date", OrderFilter.DESC));
+					List<Price> priceList = pDAO.find(filters);
+					try {
+						if (priceList.size() > 0) {
+							for (Price p : priceList) {
+								if (p.getSourceId() != 1 && 
+										(Util.getCurrentTimestamp().getTime() - 
+										p.getDate().getTime()) > (long) 60 * 60 * 24 * 1000) {
+
+									processCard(ccv);
+									break;
+								}
+							}
+						} else {
+							processCard(ccv);
+						}
+					} catch (UnknownHostException e) {
+						System.out
+								.println("ERROR: Couldn't connect to price site.");
+					}
 				}
 			}
 		}
 		
-		private void processCard(CollectionCardView ccv) {
-			List<ExternalCardInfo> eci = getOnlinePrices(ccv.getName());
+		private void processCard(CollectionCardView ccv) throws UnknownHostException {
+			List<ExternalCardInfo> eci = getOnlinePrices(ccv);
 			CardDAO cardDAO = new CardDAO();
 			cardDAO.startTransaction();
 			for (ExternalCardInfo i : eci) {
 				try {
 					LinkedList<Filter> cardFilter = new LinkedList<Filter>();
-					cardFilter.add(new Filter("name", i.getName()));
+					cardFilter.add(new Filter("id", ccv.getCardId()));
 					Card card = cardDAO.findSingle(cardFilter);
 					RarityDAO rarityDAO = new RarityDAO();
 					LinkedList<Filter> rarityFilter = new LinkedList<Filter>();
@@ -130,10 +157,17 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 			cardDAO.commmitTransaction();
 		}
 		
-		public List<ExternalCardInfo> getOnlinePrices(String cardName) {
+		public List<ExternalCardInfo> getOnlinePrices(CollectionCardView ccv) throws UnknownHostException {
+			String cardName = ccv.getName();
+			Rarity rarity = new RarityDAO().findSingle(FilterList.start("rarity", ccv.getRarity(), Filter.Equality.EQUALS).getList());
 			List<ExternalCardInfo> cardInfos = new LinkedList<ExternalCardInfo>();
 			String searchWords = cardName;
+			System.out.println("Prices for: " + cardName);
+			// better troll search results if we remove special characters
+			searchWords = searchWords.replace("-", "");
+			searchWords += " " + rarity.getDescription();
 			searchWords = searchWords.replace(" ", "+");
+			System.out.println("Search terms: " + searchWords);
 			URL yahoo;
 			try {
 				yahoo = new URL("http://trollandtoad.com/products/search.php?search_words=" + searchWords + "&Image1.x=0&Image1.y=0&search_category=&searchmode=basic");
@@ -143,8 +177,8 @@ public class PriceLookupQueue implements ThreadCompleteListener {
 	                                new InputStreamReader(
 	                                yc.getInputStream()));
 	        String inputLine;
-	        Pattern regularCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+) - ([a-zA-Z ]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
-	        Pattern ultimateCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z ]+) - ([a-zA-Z0-9 \\-,]+) - ([A-Z0-9]+\\-[A-Z]*[0-9]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
+	        Pattern regularCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z0-9 \\-,\\.'\"/]+)[ \\-]+([A-Z0-9]+\\-[A-Z]*[0-9]+)[ \\-]+([a-zA-Z ]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-&\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),;&]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
+	        Pattern ultimateCardExpr = Pattern.compile("<li style=[\"']font-size:13.5px;margin-bottom:5px;[\"']><a href=[\"']/([a-z0-9\\.]+)[\"']><b>([a-zA-Z ]+)[ \\-]+([a-zA-Z0-9 \\-,\\.'\"/]+)[ \\-]+([A-Z0-9]+\\-[A-Z]*[0-9]+)</b></a> \\(<a href=[\"'][a-zA-Z0-9\\!\\-&\\./]+[\"']>[a-zA-Z0-9 :\\-\\!'(),;&]+</a>\\)  \\(\\$([0-9\\.]+)\\)");
 	        while ((inputLine = in.readLine()) != null) {
 	        	Matcher regexMatcher = regularCardExpr.matcher(inputLine);
 	        	while (regexMatcher.find()) {

@@ -9,6 +9,7 @@ public class CollectionCardView extends CollectionCard {
 	private String attribute;
 	private BigDecimal price;
 	private String locationName;
+	private String imageFileName;
 	public CollectionCardView() { }
 	public static CollectionCardView createViewFromCard(CollectionCard card) {
 		CollectionCardView view = new CollectionCardView();
@@ -42,5 +43,11 @@ public class CollectionCardView extends CollectionCard {
 	}
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
+	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }

@@ -13,6 +13,7 @@ import org.zkoss.zul.Window;
 
 import com.rms.collector.data.UserLoginDAO;
 import com.rms.collector.model.UserLogin;
+import com.rms.collector.util.Util;
 
 public class LoginViewController extends GenericForwardComposer<Window> {
     /**
@@ -36,6 +37,7 @@ public class LoginViewController extends GenericForwardComposer<Window> {
     
     private boolean doLogin() {
     	try {
+    		if (Util.isEmpty(passwordTxb.getValue()) | Util.isEmpty(nameTxb.getValue())) return false;
     		MessageDigest md = MessageDigest.getInstance("SHA1");
     		String passwordString = new String(passwordTxb.getValue());
     		md.update(passwordString.getBytes());
@@ -47,11 +49,17 @@ public class LoginViewController extends GenericForwardComposer<Window> {
     		UserLoginDAO userLoginDAO = new UserLoginDAO();
     		userLogin = userLoginDAO.findByLogin(userLogin);
     		
-    		if (userLogin.getPassword().equals(hashStr)) {
-    			UserCredentialManager.getInstance().authenticate(userLogin);
-    			confirmBtn.setImage("/images/icons/lock_open.png");
-    			mesgLbl.setValue("Loading");
-    			Executions.sendRedirect("/home.zul");
+    		if (Util.isEmpty(userLogin)) {
+    			mesgLbl.setValue("Wrong username or password!");
+    		} else {
+	    		if (hashStr.equals(userLogin.getPassword())) {
+	    			UserCredentialManager.getInstance().authenticate(userLogin);
+	    			confirmBtn.setImage("/images/icons/lock_open.png");
+	    			mesgLbl.setValue("Loading... ");
+	    			Executions.sendRedirect("/home.zul");
+	    		} else {
+	    			mesgLbl.setValue("Wrong username or password!");
+	    		}
     		}
     		return false;
     	} catch (NoSuchAlgorithmException e) {

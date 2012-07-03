@@ -1,10 +1,13 @@
 package com.rms.collector.control;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.InputEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Spinner;
@@ -25,6 +28,7 @@ import com.rms.collector.model.Location;
 import com.rms.collector.model.Rarity;
 import com.rms.collector.model.view.CollectionCardView;
 import com.rms.collector.util.Filter;
+import com.rms.collector.util.FilterList;
 import com.rms.collector.util.Util;
 
 public class CollectionCardFormController extends GenericForwardComposer<Window> {
@@ -33,7 +37,7 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Textbox cardName;
+	private Combobox cardName;
 	private Listbox rarity, location;
 	private Spinner amount;
 	private Window createCollectionCardWin;
@@ -49,6 +53,17 @@ public class CollectionCardFormController extends GenericForwardComposer<Window>
     
     public void onOK$createCollectionCardWin() {
     	createCollectionCardAndContinue();
+    }
+    
+    public void onChanging$cardName(InputEvent event) {
+    	if (Util.isNotEmpty(event.getValue())) {
+    		cardName.getChildren().clear();
+	    	CardDAO cDAO = new CardDAO();
+	    	System.out.println("Event data: " + event.getValue());
+			List<Card> cards = cDAO.find(FilterList.start("name", event.getValue() + "%", Filter.Equality.LIKE).limit(10).getList());
+			for (Card card : cards)
+				cardName.appendItem(card.getName());
+    	}
     }
     
     private void createCollectionCardAndContinue() {

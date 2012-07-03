@@ -85,15 +85,15 @@ public class UserDAO extends DAO implements iDAO<User> {
 	@Override
 	public Integer insert(User entity) throws SQLException {
 		return executeReturn("INSERT INTO User(first_name,last_name,email) " +
-                "VALUES ('" + entity.getFirstName() + "','" + entity.getLastName() +
-                "','" + entity.getEmail() + "')");
+                "VALUES ('" + Util.sqlFilter(entity.getFirstName()) + "','" + Util.sqlFilter(entity.getLastName()) +
+                "','" + Util.sqlFilter(entity.getEmail()) + "')");
 	}
 
 	@Override
 	public boolean update(User entity) throws SQLException {
-		return execute("UPDATE User SET first_name = '" + entity.getFirstName() + 
-                "', last_name = '" + entity.getLastName() + 
-                "', email = " + entity.getEmail() + "' where id = '" + entity.getId() + "'");
+		return execute("UPDATE User SET first_name = '" + Util.sqlFilter(entity.getFirstName()) + 
+                "', last_name = '" + Util.sqlFilter(entity.getLastName()) + 
+                "', email = " + Util.sqlFilter(entity.getEmail()) + "' where id = '" + entity.getId() + "'");
 	}
 
 }

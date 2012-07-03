@@ -1,9 +1,12 @@
 package com.rms.collector.model;
 
+import java.util.HashMap;
+
 public class UserLogin {
 	int userId;
 	String userLogin;
 	String password;
+	private HashMap<String, Object> temp = new HashMap<String, Object>();
 	
 	public UserLogin() {
 		
@@ -32,5 +35,11 @@ public class UserLogin {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public void setTemp(String key, Object value) {
+		this.temp.put(key, value);
+	}
+	public Object getTemp(String key) {
+		return this.temp.get(key);
 	}
 }

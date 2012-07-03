@@ -107,12 +107,12 @@ public class LocationDAO extends DAO implements iDAO<Location> {
 	@Override
 	public Object insert(Location entity) throws SQLException {
 		return execute("INSERT INTO Location(user_id,name) " +
-                "VALUES ('" + entity.getUserId() + "','" + entity.getName() + "')");
+                "VALUES ('" + entity.getUserId() + "','" + Util.sqlFilter(entity.getName()) + "')");
 	}
 
 	@Override
 	public boolean update(Location entity) throws SQLException {
-		return execute("UPDATE Location SET name = '" + entity.getName() + 
+		return execute("UPDATE Location SET name = '" + Util.sqlFilter(entity.getName()) + 
                 "', user_id = " + entity.getUserId() + 
                 " where id = " + entity.getId());
 	}

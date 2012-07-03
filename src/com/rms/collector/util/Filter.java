@@ -6,22 +6,26 @@ import java.util.List;
 public class Filter {
 	protected String key;
 	protected Object value;
-	protected boolean notEqual;
+	protected Equality equality;
 	
 	public static Filter AND = new Filter("AND", "AND");
 	public static Filter OR = new Filter("OR", "OR");
 	public static Filter LB = new Filter("LB", "LB");
 	public static Filter RB = new Filter("RB", "RB");
 	
+	public enum Equality {
+		EQUALS, NOTEQUALS, LIKE, NOTLIKE
+	}
+	
 	public Filter(String key, Object value) {
 		this.key = key;
 		this.value = value;
 	}
 	
-	public Filter(String key, Object value, boolean notEqual) {
+	public Filter(String key, Object value, Equality equality) {
 		this.key = key;
 		this.value = value;
-		this.notEqual = notEqual;
+		this.equality = equality;
 	}
 
 	public String getKey() {
@@ -54,7 +58,9 @@ public class Filter {
 	public String toString() {
 		StringBuilder b = new StringBuilder();
 		b.append(key);
-		if (notEqual) b.append(" <> '");
+		if (equality == Equality.NOTEQUALS) b.append(" <> '");
+		else if (equality == Equality.LIKE) b.append(" LIKE '");
+		else if (equality == Equality.NOTLIKE) b.append(" NOT LIKE '");
 		else b.append(" = '");
 		b.append(value.toString().replace("'", "''"));
 		b.append("'");

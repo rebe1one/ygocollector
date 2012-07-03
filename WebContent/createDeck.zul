@@ -1,0 +1,16 @@
+<?page title="Collector"?>
+<window id="deckWin" border="normal" width="500px"
+    title="Create a collection"
+    apply="com.rms.collector.control.DeckFormController" mode="overlapped"
+    position="center,center" closable="true">
+    <grid>
+        <rows>
+            <row>
+                Deck Name:
+                <textbox id="deckName" />
+            </row>
+        </rows>
+    </grid>
+    <button id="confirm" label="Create" />
+    <label id="mesgLbl" />
+</window>

@@ -1,146 +1,107 @@
 <?page title="Collector" contentType="text/html;charset=UTF-8"?>
 <?init class="com.rms.collector.control.CheckForLogin" ?>
 <zk>
-<zscript>
-	import java.util.HashMap;
-   void editCollectionCard(Object ccv) {
-       HashMap arguments = new HashMap();
-	   arguments.put("collectionCardView", ccv);
-	   arguments.put("collectionCardList", collectionCardList);
-	   arguments.put("collectionTotalValueField", collectionTotalValueField);
-	   arguments.put("collectionHighestValueField", collectionHighestValueField);
-	   arguments.put("collectionId", Integer.valueOf((collectionList.getSelectedItem().getFirstChild()).getLabel()));
-       Executions.createComponents("editCollectionCard.zul", null, arguments);
-   }
-</zscript>
 <borderlayout apply="com.rms.collector.control.HomeViewController">
-	<north size="150px">
-		<div>
-			<div style="float:right">
-				<label id="welcomeLabel"/>
-			    <button id="logout" label="Logout"/>
-		    </div>
-		    <image src="/images/ygo_logo.jpg"/>
-		</div>
+	<north size="180px" border="0">
+		<vlayout>
+			<div>
+				<div style="float:right">
+					<label id="welcomeLabel"/>
+				    <button id="logout" label="Logout"/>
+			    </div>
+			    <image src="/images/ygo_logo.jpg"/>
+			</div>
+			<menubar id="menubar" width="100%">
+				<menu id="adminMenu" visible="false" label="Admin">
+					<menupopup>
+						<menuitem id="getCardImages" label="Get Card Images"
+							image="/images/icons/download.png" />
+						<menuitem id="wizardStep1" label="Wizard Step 1"
+							image="/images/icons/wand.png" />
+						<menuitem id="cleanupSomeShit"
+							label="Cleanup Some Shit" image="/images/icons/action_stop.gif" />
+					</menupopup>
+				</menu>
+				<menuitem id="userSettings" label="Settings"
+					image="/images/icons/icon_settings.gif" />
+				<menuitem id="ebay" label="Ebay"
+					image="/images/icons/icon_settings.gif" />
+			</menubar>
+		</vlayout>
 	</north>
 	<center border="0">
 		<borderlayout>
-			<west size="200px" flex="true" border="0" splittable="true">
-				<borderlayout>
-					<north title="Collections" size="50%" flex="true" splittable="true">
-						<vlayout>
-							<toolbar width="100%" height="22px">
-								<toolbarbutton id="createCollection" label="New Collection"/>
-							</toolbar>
-							<listbox id="collectionList" height="245px" style="margin: 5px;"
-								emptyMessage="No items match your search">
-								<listhead>
-									<listheader label="ID" sort="auto(id)" />
-									<listheader label="Name" sort="auto(name)" />
-								</listhead>
-								<template name="model">
-									<listitem>
-										<listcell label="${each.getId()}" />
-										<listcell label="${each.getName()}" />
-									</listitem>
-								</template>
-							</listbox>
-						</vlayout>
-					</north>
-					<center title="Decks" flex="true">
-						<label value="Decks" style="color:gray;font-size:30px" />
-					</center>
-					<south title="Locations" flex="true">
-						<vlayout>
-							<toolbar width="100%" height="22px">
-								<toolbarbutton id="createLocation" label="New Location"/>
-							</toolbar>
-							<listbox id="locationList" height="245px" style="margin: 5px;"
-								emptyMessage="No items match your search">
-								<listhead>
-									<listheader label="Name" sort="auto(name)" />
-								</listhead>
-								<template name="model">
-									<listitem>
-										<listcell label="${each.getName()}" />
-									</listitem>
-								</template>
-							</listbox>
-						</vlayout>
-					</south>
-				</borderlayout>
+			<west size="250px" flex="true" splittable="true">
+				<tabbox>
+					<tabs>
+						<tab label="Collections"/>
+						<tab label="Decks"/>
+						<tab label="Locations"/>
+					</tabs>
+					<tabpanels>
+						<tabpanel style="padding:0px">
+							<vlayout>
+								<toolbar width="100%" height="22px">
+									<toolbarbutton id="createCollection" label="New Collection" image="/images/icons/add.png"/>
+									<toolbarbutton id="deleteCollections" disabled="true" label="Remove Collection(s)" image="/images/icons/delete.png"/>
+								</toolbar>
+								<listbox id="collectionList" height="245px" style="margin: 5px;"
+									emptyMessage="No items match your search" checkmark="true" multiple="true">
+									<listhead>
+										<listheader label="Name" sort="auto(name)" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="${each.getName()}" />
+										</listitem>
+									</template>
+								</listbox>
+							</vlayout>
+						</tabpanel>
+						<tabpanel style="padding:0px">
+							<vlayout>
+								<toolbar width="100%" height="22px">
+									<toolbarbutton id="createDeck" label="New Deck" image="/images/icons/add.png"/>
+									<toolbarbutton id="deleteDecks" disabled="true" label="Remove Deck(s)" image="/images/icons/delete.png"/>
+								</toolbar>
+								<listbox id="deckList" height="245px" style="margin: 5px;"
+									emptyMessage="No items match your search" checkmark="true" multiple="true">
+									<listhead>
+										<listheader label="Name" sort="auto(name)" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="${each.getName()}" />
+										</listitem>
+									</template>
+								</listbox>
+							</vlayout>
+						</tabpanel>
+						<tabpanel style="padding:0px">
+							<vlayout>
+								<toolbar width="100%" height="22px">
+									<toolbarbutton id="createLocation" label="New Location" image="/images/icons/add.png"/>
+									<toolbarbutton id="deleteLocation" disabled="true" label="Remove Location(s)" image="/images/icons/delete.png"/>
+								</toolbar>
+								<listbox id="locationList" height="245px" style="margin: 5px;"
+									emptyMessage="No items match your search" checkmark="true" multiple="true">
+									<listhead>
+										<listheader label="Name" sort="auto(name)" />
+									</listhead>
+									<template name="model">
+										<listitem>
+											<listcell label="${each.getName()}" />
+										</listitem>
+									</template>
+								</listbox>
+							</vlayout>
+						</tabpanel>
+					</tabpanels>
+				</tabbox>
 			</west>
 			<center id="centerPanel">
 				<vlayout>
-					<box id="emptyBox" width="100%">
-						<label value="Select a collection"/>
-					</box>
-					<box id="collectionBox" width="100%" visible="false">
-					<toolbar width="100%" height="22px">
-						<toolbarbutton id="addCollectionCard" label="Add Card" image="/images/icons/add.png"/>
-						<toolbarbutton id="refreshAllCollectionPrices" label="Refresh All Prices" image="/images/icons/action_refresh.gif"/>
-						<toolbarbutton id="refreshMissingCollectionPrices" label="Lookup Missing Prices" image="/images/icons/magnifier.png"/>
-						<toolbarbutton id="removeCollection" label="Remove Collection" image="/images/icons/action_stop.gif"/>
-						<toolbarbutton id="cleanupSomeShit" label="Cleanup Some Shit" image="/images/icons/action_stop.gif"/>
-					</toolbar>
-						<groupbox mold="3d" width="100%">
-		                    <caption label="Collection Info" />
-	                        <grid width="300px" sclass="status" id="collectionInfo">
-	                            <rows>
-	                                <row>
-	                                    <cell sclass="head"><label>Name</label></cell>
-	                                    <label id="collectionNameField"/>
-	                                </row>
-	                                <row>
-	                                    <cell sclass="head"><label>Total Value</label></cell>
-	                                    <label id="collectionTotalValueField"/>
-	                                </row>
-	                                <row>
-	                                    <cell sclass="head"><label>Highest Value Card</label></cell>
-	                                    <label id="collectionHighestValueField"/>
-	                                </row>
-	                                <row>
-	                                    <cell sclass="head"><label>Number of Cards</label></cell>
-	                                    <label id="collectionTotalNumberField"/>
-	                                </row>
-	                            </rows>
-	                        </grid>
-		                </groupbox>
-		                <groupbox mold="3d" hflex="1" width="100%">
-		                	<caption label="Collection Cards" />
-							<listbox id="collectionCardList" height="500px;" hflex="1" style="margin: 5px;"
-								emptyMessage="No items match your search">
-								<listhead>
-									<listheader label="ID" sort="auto(cardId)" />
-									<listheader label="Name" sort="auto(name)" />
-									<listheader label="Rarity" sort="auto(rarity)" />
-									<listheader label="Amount" sort="auto(amount)" />
-									<listheader label="Attribute" sort="auto(attribute)" />
-									<listheader label="Price" sort="auto(price)" />
-									<listheader label="Location" sort="auto(locationName)" />
-									<listheader label="Edit" sort="none"/>
-								</listhead>
-								<template name="model">
-									<listitem>
-										<listcell label="${each.getCardId()}" />
-										<listcell label="${each.getName()}" />
-										<listcell label="${each.getRarity()}" />
-										<listcell label="${each.getAmount()}" />
-										<listcell label="${each.getAttribute()}" />
-										<listcell label="${each.getPrice()}" />
-										<listcell label="${each.getLocationName()}" />
-										<listcell>
-											<button label="Edit">
-						                        <attribute name="onClick">
-						                        <![CDATA[
-						                            editCollectionCard(self.getParent().getParent().getValue());
-						                        ]]></attribute>
-						                    </button>
-										</listcell>
-									</listitem>
-								</template>
-							</listbox>
-						</groupbox>
+                    <box id="workbench" hflex="1">
 					</box>
 				</vlayout>
 			</center>
