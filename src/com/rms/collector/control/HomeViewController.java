@@ -49,7 +49,7 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 	private static final long serialVersionUID = 1L;
 	private Listbox collectionList, deckList, locationList;
 	private Box workbench;
-	private Toolbarbutton deleteDecks, deleteCollections;
+	private Toolbarbutton deleteDecks, deleteCollections, deleteLocations;
 	private Label welcomeLabel;
 	private Menu adminMenu;
 
@@ -185,8 +185,25 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 	private int getSelectedCollectionId() {
 		return ((Collection) collectionList.getSelectedItem().getValue()).getId();
 	}
+	
+	private void clearDecks() {
+		deckList.clearSelection();
+		deleteDecks.setDisabled(true);
+	}
+	
+	private void clearCollections() {
+		collectionList.clearSelection();
+		deleteCollections.setDisabled(true);
+	}
+	
+	private void clearLocations() {
+		locationList.clearSelection();
+		deleteLocations.setDisabled(true);
+	}
 
 	public void onSelect$collectionList(SelectEvent<Listitem, Collection> event) {
+		clearDecks();
+		clearLocations();
 		if (collectionList.getSelectedItems().size() > 0) {
 			deleteCollections.setDisabled(false);
 			int id = ((Collection) event.getReference().getValue()).getId();
@@ -203,6 +220,8 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 	}
 
 	public void onSelect$deckList(SelectEvent<Listitem, Deck> event) {
+		clearCollections();
+		clearLocations();
 		if (deckList.getSelectedItems().size() > 0) {
 			deleteDecks.setDisabled(false);
 			int id = ((Deck) event.getReference().getValue()).getId();

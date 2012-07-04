@@ -21,7 +21,7 @@ public class UserEBayInfoDAO extends DAO {
 			while (rs.next()) {
 				ebayInfo = new UserEBayInfo();
 				ebayInfo.setUserId(rs.getInt(1));
-				ebayInfo.setEBayToken(rs.getBlob(2).toString());
+				ebayInfo.setEBayToken(rs.getBlob(2).getBytes(1, (int)rs.getBlob(2).length()));
 				ebayInfo.setEBayTokenExpirationDate(rs.getTimestamp(3));
 			}
 			

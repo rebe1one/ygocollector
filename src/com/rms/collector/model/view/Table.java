@@ -9,6 +9,7 @@ public class Table {
 	private List<Join> joins;
 	private List<Column> columns;
 	private Order order;
+	private int limit = 0;;
 	public Table(String name, String alias) {
 		this.name = name;
 		this.alias = alias;
@@ -50,5 +51,11 @@ public class Table {
 	}
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 }

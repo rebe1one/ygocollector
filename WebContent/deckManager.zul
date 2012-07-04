@@ -6,23 +6,31 @@
 	</toolbar>
 	<hlayout width="100%">
 		<groupbox hflex="1" style="margin:5px">
-                <caption>
-                	<label value="Cards"/>
-                </caption>
+			<caption>
+				<label value="Your Cards"/>
+			</caption>
+               <vlayout>
+				<hlayout>
+	                Search collections:
+	                <textbox id="searchCollection"/>
+                </hlayout>
 				<listbox id="collection" multiple="true" height="300px">
 					<listhead>
 						<listheader label="Card" sort="auto(name)" />
+						<listheader label="Attribute" sort="auto(attribute)" width="70px"/>
 						<listheader label="Rarity" sort="auto(rarity)" width="70px"/>
 						<listheader label="Amount" sort="auto(amount)" width="60px"/>
 					</listhead>
 					<template name="model">
 						<listitem>
 							<listcell label="${each.getName()}" />
+							<listcell label="${each.getAttribute()}" />
 							<listcell label="${each.getRarity()}" />
 							<listcell label="${each.getAmount()}" />
 						</listitem>
 					</template>
 				</listbox>
+			</vlayout>
 		</groupbox>
 		<vbox spacing="10px">
 			<div style="display:block; height:100px"></div>
@@ -30,23 +38,38 @@
 	        <image style="cursor:pointer" id="fromDeck" src="/images/leftarrow.png" />
 	    </vbox>
 		<groupbox hflex="1" style="margin:5px">
-                <caption>
-                	<label value="Deck"/>
-                </caption>
+			<caption>
+				<label value="Deck"/>
+			</caption>
+			<vlayout>
+				<hlayout>
+	                All Cards:
+	                <combobox value="" id="cardName" autodrop="true"/>
+	                <button id="addCard" label="Add"/>
+                </hlayout>
 				<listbox id="deck" multiple="true" height="300px" hflex="1" emptyMessage="No items match your search">
 					<listhead>
 						<listheader label="Card" sort="auto(name)" />
-						<listheader label="Attribute" sort="auto(rarity)" width="70px"/>
+						<listheader label="Attribute" sort="auto(attribute)" width="70px"/>
 						<listheader label="Amount" sort="auto(amount)" width="60px"/>
+						<listheader width="40px"/>
+						<listheader width="40px"/>
 					</listhead>
 					<template name="model">
 						<listitem>
 							<listcell label="${each.getName()}" />
 							<listcell label="${each.getAttribute()}" /> 
 							<listcell label="${each.getAmount()}" />
+							<listcell>
+								<image src="/images/uparrow.png" forward="onClick=Manager.onIncreaseCardCount(event)"/>
+							</listcell>
+							<listcell>
+								<image src="/images/downarrow.png" forward="onClick=Manager.onDecreaseCardCount(event)"/>
+							</listcell>
 						</listitem>
 					</template>
 				</listbox>
+			</vlayout>
 		</groupbox>
 	</hlayout>
 	<separator height="15px" />

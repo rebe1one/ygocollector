@@ -58,12 +58,19 @@ public class Filter {
 	public String toString() {
 		StringBuilder b = new StringBuilder();
 		b.append(key);
-		if (equality == Equality.NOTEQUALS) b.append(" <> '");
-		else if (equality == Equality.LIKE) b.append(" LIKE '");
-		else if (equality == Equality.NOTLIKE) b.append(" NOT LIKE '");
-		else b.append(" = '");
-		b.append(value.toString().replace("'", "''"));
-		b.append("'");
+		if (equality == Equality.NOTEQUALS) b.append(" <> ");
+		else if (equality == Equality.LIKE) b.append(" LIKE ");
+		else if (equality == Equality.NOTLIKE) b.append(" NOT LIKE ");
+		else b.append(" = ");
+		if (value instanceof SubFilter) {
+			SubFilter sf = (SubFilter) value;
+			sf.setSelectColumn(key);
+			b.append(sf.toString());
+		} else {
+			b.append("'");
+			b.append(value.toString().replace("'", "''"));
+			b.append("'");
+		}
 		return b.toString();
 	}
 }

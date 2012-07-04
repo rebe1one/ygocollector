@@ -81,7 +81,7 @@
 							<vlayout>
 								<toolbar width="100%" height="22px">
 									<toolbarbutton id="createLocation" label="New Location" image="/images/icons/add.png"/>
-									<toolbarbutton id="deleteLocation" disabled="true" label="Remove Location(s)" image="/images/icons/delete.png"/>
+									<toolbarbutton id="deleteLocations" disabled="true" label="Remove Location(s)" image="/images/icons/delete.png"/>
 								</toolbar>
 								<listbox id="locationList" height="245px" style="margin: 5px;"
 									emptyMessage="No items match your search" checkmark="true" multiple="true">

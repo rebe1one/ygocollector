@@ -41,8 +41,15 @@ public class Views {
 		op.addJoin(new Join("source_id", "price_source_id", "cc"));
 		op.addJoin(new Join("rarity", "cc"));
 		op.addJoin(new Join("set_id", "cc"));
+		op.addJoin(new Join("date", "op", true));
 		op.addColumn(new Column("price"));
+		op.addColumn(new Column("date", "price_date"));
 		collectionCardView.addTable(op);
+		Table col = new Table("Collection", "col");
+		col.addJoin(new Join("id", "collection_id", "cc"));
+		col.addColumn(new Column("user_id"));
+		collectionCardView.addTable(col);
+		collectionCardView.setOrderBy(new Order("price_date", "desc"));
 		views.put(collectionCardView.getName(), collectionCardView);
 	}
 	

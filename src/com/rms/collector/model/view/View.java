@@ -10,6 +10,7 @@ import com.rms.collector.util.Util;
 public class View {
 	private String name;
 	private List<Table> tables;
+	private Order orderBy;
 	
 	public View(String name) {
 		this.name = name;
@@ -78,6 +79,8 @@ public class View {
 					sub.append(t.getName());
 					sub.append(" ORDER BY ");
 					sub.append(t.getOrder().getColumn());
+					sub.append(" ");
+					sub.append(t.getOrder().getDir());
 					
 					dao.run(dropView(t.getAlias()));
 					dao.run(sub.toString());
@@ -99,11 +102,47 @@ public class View {
 					b.append(".");
 					b.append(j.getFrom());
 					b.append(" = ");
-					b.append(j.getOn());
-					b.append(".");
-					b.append(j.getTo());
+					if (j.isMax()) {
+						b.append("(SELECT MAX(");
+						b.append(j.getFrom());
+						b.append(") FROM ");
+						b.append(t.getName());
+						b.append(" ");
+						b.append(t.getName());
+						b.append("_MAX WHERE ");
+						boolean cf2 = false;
+						for (Join j2 : t.getJoins()) {
+							if (!j2.getFrom().equals(j.getFrom())) {
+								if (cf2) b.append(" AND ");
+								else cf2 = true;
+								b.append(t.getName());
+								b.append("_MAX.");
+								b.append(j2.getFrom());
+								b.append(" = ");
+								b.append(j2.getOn());
+								b.append(".");
+								b.append(j2.getTo());
+							}
+						}
+						b.append(")");
+					} else {
+						b.append(j.getOn());
+						b.append(".");
+						b.append(j.getTo());
+					}
 				}
 			}
+			
+			if (t.getLimit() > 0) {
+				b.append(" LIMIT ");
+				b.append(t.getLimit());
+			}
+		}
+		if (Util.isNotEmpty(orderBy)) {
+			b.append(" ORDER BY ");
+			b.append(orderBy.getColumn());
+			b.append(" ");
+			b.append(orderBy.getDir());
 		}
 		dao.run(dropView(this.name));
 		dao.run(b.toString());
@@ -111,5 +150,13 @@ public class View {
 	
 	private String dropView(String name) {
 		return "DROP VIEW IF EXISTS " + name;
+	}
+
+	public Order getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(Order orderBy) {
+		this.orderBy = orderBy;
 	}
 }

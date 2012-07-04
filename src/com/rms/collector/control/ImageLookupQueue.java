@@ -1,6 +1,7 @@
 package com.rms.collector.control;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,8 +90,9 @@ public class ImageLookupQueue implements ThreadCompleteListener {
 		
 		public void doRun() {
 			if (cards != null) {
-				for (Card c : cards) {
-					processCard(c);
+				for (int i = 0; i < cards.size(); i++) {
+					System.out.println("ON IMAGE: " + i + " / " + cards.size());
+					processCard(cards.get(i));
 				}
 			}
 		}
@@ -99,18 +101,25 @@ public class ImageLookupQueue implements ThreadCompleteListener {
 			CardImageDAO imageDAO = new CardImageDAO();
 			CardImage image = imageDAO.findSingle(FilterList.start("card_id", c.getId(), Filter.Equality.EQUALS).getList());
 			try {
-				if (Util.isEmpty(image)) {
-					String fileName = getImage(c);
-					imageDAO.insert(new CardImage(c.getId(), fileName));
+				if (!Util.isEmpty(image)) {
+					File file=new File("/home/andrei/subzero/ygo/collector/WebContent/images/cards/" + image.getImageFileName());
+					if (!file.exists()) {
+						String fileName = getImage(c);
+						imageDAO.update(new CardImage(c.getId(), fileName));
+					}
 				}
-			} catch (SQLException e) {
+			} catch (Exception e) {
+				try {
+					imageDAO.update(new CardImage(c.getId(), ""));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 				e.printStackTrace();
 			}
 		}
 		
-		public String getImage(Card card) {
+		public String getImage(Card card) throws Exception {
 			String searchWords = card.getName();
-			System.out.println("Image for: " + searchWords);
 			searchWords = searchWords.replace(" ", "_");
 			String fileName = "/home/andrei/subzero/ygo/collector/WebContent/images/cards/" + card.getId();
 			URL rdfFeed;
@@ -132,7 +141,6 @@ public class ImageLookupQueue implements ThreadCompleteListener {
 		        		if (Util.isNotEmpty(regexMatcher.group(1))) {
 		        			String url = regexMatcher.group(1);
 		        			url = url.replace("&wiki;", "http://yugioh.wikia.com/wiki/Special:URIResolver/");
-		        			System.out.println("Parse 1: " + regexMatcher.group(1));
 		        			URLConnection picPage = new URL(url).openConnection();
 		        	        in2 = new BufferedReader(
 		        	                                new InputStreamReader(
@@ -143,7 +151,6 @@ public class ImageLookupQueue implements ThreadCompleteListener {
 		        	        	Matcher regexMatcher2 = regularCardExpr2.matcher(inputLine2);
 		        	        	while (regexMatcher2.find()) {
 		        	        		if (Util.isNotEmpty(regexMatcher2.group(1))) {
-		        	        			System.out.println("Saving: " + regexMatcher2.group(1));
 		        	        			if (regexMatcher2.group(1).endsWith(".jpg") || regexMatcher2.group(1).endsWith(".jpeg")) {
 		        	        				type = ".jpg";
 		        	        				saveImage(regexMatcher2.group(1), fileName + ".jpg");
@@ -160,10 +167,6 @@ public class ImageLookupQueue implements ThreadCompleteListener {
 		        		}
 		        	}
 		        }
-		        System.out.println("Finished!");
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
 			} finally {
 				try {
 					if (in != null) in.close();

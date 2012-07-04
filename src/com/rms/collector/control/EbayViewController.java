@@ -41,7 +41,7 @@ public class EbayViewController extends GenericForwardComposer<Window> {
         UserEBayInfoDAO dao = new UserEBayInfoDAO();
         UserEBayInfo info = new UserEBayInfo();
         info.setUserId(UserCredentialManager.getInstance().getUserLogin().getUserId());
-        info.setEBayToken(response.getEBayAuthToken());
+        info.setEBayToken(response.getEBayAuthToken().getBytes());
         info.setEBayTokenExpirationDate(new Timestamp(response.getHardExpirationTime().getTimeInMillis()));
         dao.insert(info);
         System.out.println(response.getEBayAuthToken());

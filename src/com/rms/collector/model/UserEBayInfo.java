@@ -27,8 +27,8 @@ public class UserEBayInfo {
 	public String getEBayToken() {
 		return eBayToken;
 	}
-	public void setEBayToken(String token) {
-		this.eBayToken = token;
+	public void setEBayToken(byte[] token) {
+		this.eBayToken = new String(token);
 	}
 	public Timestamp getEBayTokenExpirationDate() {
 		return eBayTokenExpirationDate;

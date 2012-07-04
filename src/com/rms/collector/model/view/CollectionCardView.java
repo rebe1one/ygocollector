@@ -1,6 +1,7 @@
 package com.rms.collector.model.view;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import com.rms.collector.model.CollectionCard;
 
@@ -10,6 +11,8 @@ public class CollectionCardView extends CollectionCard {
 	private BigDecimal price;
 	private String locationName;
 	private String imageFileName;
+	private Timestamp priceDate;
+	private String userId;
 	public CollectionCardView() { }
 	public static CollectionCardView createViewFromCard(CollectionCard card) {
 		CollectionCardView view = new CollectionCardView();
@@ -49,5 +52,17 @@ public class CollectionCardView extends CollectionCard {
 	}
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Timestamp getPriceDate() {
+		return priceDate;
+	}
+	public void setPriceDate(Timestamp priceDate) {
+		this.priceDate = priceDate;
 	}
 }

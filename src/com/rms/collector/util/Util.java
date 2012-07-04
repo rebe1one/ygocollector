@@ -64,4 +64,5 @@ public class Util {
 	public static String sqlFilter(String in) {
 		return in.replace("'", "''");
 	}
+	
 }
