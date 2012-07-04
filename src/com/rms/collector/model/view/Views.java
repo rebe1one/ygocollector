@@ -9,6 +9,7 @@ public class Views {
 	private static void build() {
 		builCollectionCardView();
 		buildDeckCardView();
+		buildUserLoginView();
 	}
 	
 	private static void builCollectionCardView() {
@@ -66,6 +67,17 @@ public class Views {
 		c.addColumn(new Column("attribute"));
 		deckCardView.addTable(c);
 		views.put(deckCardView.getName(), deckCardView);
+	}
+	
+	private static void buildUserLoginView() {
+		View userLoginView = new View("UserLoginView");
+		Table u = new Table("User", "u");
+		userLoginView.addTable(u);
+		Table ul = new Table("UserLogin", "ul");
+		ul.addJoin(new Join("user_id", "id", "u"));
+		ul.addColumn(new Column("user_login"));
+		userLoginView.addTable(ul);
+		views.put(userLoginView.getName(), userLoginView);
 	}
 	
 	public static void generate() throws SQLException {

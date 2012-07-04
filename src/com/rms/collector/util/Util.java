@@ -20,6 +20,13 @@ public class Util {
 	public static boolean isNotEmpty(Object o) {
 		return !isEmpty(o);
 	}
+	public static boolean isEmpty(List<?> list) {
+		if (list == null || list.size() == 0) return true;
+		return false;
+	}
+	public static boolean isNotEmpty(List<?> list) {
+		return !isEmpty(list);
+	}
 	
 	public static Timestamp getCurrentTimestamp() {
 		Date date = new Date();

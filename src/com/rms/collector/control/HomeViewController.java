@@ -72,6 +72,13 @@ public class HomeViewController extends GenericForwardComposer<Borderlayout> {
 			((Window) comp).doModal();
 		}
 	}
+	
+	public void onClick$changePassword() {
+		Component comp = Executions.createComponents("adminChangePass.zul", null, null);
+		if (comp instanceof Window) {
+			((Window) comp).doModal();
+		}
+	}
 
 	public void onClick$logout() {
 		UserCredentialManager.getInstance().logout();

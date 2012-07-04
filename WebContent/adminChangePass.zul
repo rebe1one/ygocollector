@@ -1,0 +1,25 @@
+<?page title="Collector"?>
+<?init class="com.rms.collector.control.CheckForLogin" ?>
+<window id="adminChangePass" border="normal" width="500px"
+    title="Change a user's password"
+    apply="com.rms.collector.control.AdminChangePassFormController" mode="modal"
+    position="center,center" closable="true">
+    <grid>
+        <rows>
+        	<row>
+                User:
+                <listbox id="user" rows="1" mold="select">
+                	<template name="model">
+						<listitem label="${each.getFirstName()} ${each.getLastName()} (${each.getUserLogin()})"/>
+					</template>
+                </listbox>
+            </row>
+            <row>
+                New Password:
+                <textbox id="password" type="password"/>
+            </row>
+        </rows>
+    </grid>
+    <button id="confirm" label="Create" />
+    <label id="mesgLbl" />
+</window>

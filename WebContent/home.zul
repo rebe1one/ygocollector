@@ -20,6 +20,8 @@
 							image="/images/icons/wand.png" />
 						<menuitem id="cleanupSomeShit"
 							label="Cleanup Some Shit" image="/images/icons/action_stop.gif" />
+						<menuitem id="changePassword"
+							label="Change User Password" image="/images/icons/key.png" />
 					</menupopup>
 				</menu>
 				<menuitem id="userSettings" label="Settings"

@@ -57,6 +57,11 @@ public class View {
 						b.append(c.getAs());
 					}
 				}
+			} else {
+				if (cf) b.append(", ");
+				else cf = true;
+				b.append(Util.isNotEmpty(t.getAlias()) ? t.getAlias() : t.getName());
+				b.append(".* ");
 			}
 		}
 		b.append(" FROM ");
