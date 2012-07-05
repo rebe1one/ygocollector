@@ -1,0 +1,55 @@
+<project name="ygocollector" default="default" basedir=".">
+    <property name="dist"  location="dist"/>
+    <property name="tomcat-home" value="tomcat" />
+    <property name="deploydir" value="tomcat/webapps" />
+
+    <target name="default" depends="clean,setup,compile,buildwar,deploy"></target>
+
+    <target name="setup">
+        <mkdir dir="dist" />
+        <echo>Copying WebContent into dist</echo>
+        <copy todir="${dist}/WebContent">
+            <fileset dir="WebContent" includes="**/*" />
+        </copy>
+    </target>
+
+    <target name="compile">
+        <delete dir="${dist}/WebContent/WEB-INF/classes" />
+        <mkdir dir="${dist}/WebContent/WEB-INF/classes" />
+        <javac destdir="${dist}/WebContent/WEB-INF/classes" srcdir="src" includeantruntime="">
+            <classpath>
+                <fileset dir="${basedir}/WebContent/WEB-INF/lib">
+                      <include name="*.jar" />
+                </fileset>
+                <fileset dir="${tomcat-home}/lib">
+                    <include name="*.jar" />
+                </fileset>
+            </classpath>
+        </javac>
+        <copy todir="${dist}/WebContent/WEB-INF/classes">
+            <fileset dir="src">
+                <include name="**/*.properties" />
+                <include name="**/*.xml" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="buildwar">
+        <war basedir="${basedir}/dist/WebContent" destfile="collector.war"
+         webxml="${basedir}/dist/WebContent/WEB-INF/web.xml">
+            <exclude name="WEB-INF/**" />
+            <classes dir="${basedir}/dist/WebContent/WEB-INF/classes"/>
+            <webinf dir="${basedir}/dist/WebContent/WEB-INF/">
+                <include name="**/*.jar" />
+            </webinf>
+        </war>
+    </target>
+
+    <target name="deploy">
+        <copy file="collector.war" todir="${deploydir}" />
+    </target>
+
+    <target name="clean" description="clean up" >
+        <delete dir="${dist}"/>
+    </target>
+</project>

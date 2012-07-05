@@ -1,0 +1,106 @@
+5-Jul-2012 10:34:32 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Error configuring application listener of class com.rms.collector.start.StartupListener
+java.lang.ClassNotFoundException: com.rms.collector.start.StartupListener
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1676)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1521)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClass(DefaultInstanceManager.java:415)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClassMaybePrivileged(DefaultInstanceManager.java:397)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:118)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4638)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5204)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5199)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+5-Jul-2012 10:34:32 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Skipped installing application listeners due to previous error(s)
+5-Jul-2012 10:34:34 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+5-Jul-2012 10:34:34 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+5-Jul-2012 10:38:51 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+5-Jul-2012 10:38:51 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+5-Jul-2012 10:38:57 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Error configuring application listener of class com.rms.collector.start.StartupListener
+java.lang.ClassNotFoundException: com.rms.collector.start.StartupListener
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1676)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1521)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClass(DefaultInstanceManager.java:415)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClassMaybePrivileged(DefaultInstanceManager.java:397)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:118)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4638)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5204)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5199)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+5-Jul-2012 10:38:57 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Skipped installing application listeners due to previous error(s)
+5-Jul-2012 10:38:57 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+5-Jul-2012 10:38:57 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+5-Jul-2012 10:39:22 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Error configuring application listener of class com.rms.collector.start.StartupListener
+java.lang.ClassNotFoundException: com.rms.collector.start.StartupListener
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1676)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1521)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClass(DefaultInstanceManager.java:415)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClassMaybePrivileged(DefaultInstanceManager.java:397)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:118)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4638)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5204)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5199)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+5-Jul-2012 10:39:22 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Skipped installing application listeners due to previous error(s)
+5-Jul-2012 10:39:37 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Error configuring application listener of class com.rms.collector.start.StartupListener
+java.lang.ClassNotFoundException: com.rms.collector.start.StartupListener
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1676)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1521)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClass(DefaultInstanceManager.java:415)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClassMaybePrivileged(DefaultInstanceManager.java:397)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:118)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4638)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5204)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5199)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+5-Jul-2012 10:39:37 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Skipped installing application listeners due to previous error(s)
+5-Jul-2012 10:39:48 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Error configuring application listener of class com.rms.collector.start.StartupListener
+java.lang.ClassNotFoundException: com.rms.collector.start.StartupListener
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1676)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1521)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClass(DefaultInstanceManager.java:415)
+	at org.apache.catalina.core.DefaultInstanceManager.loadClassMaybePrivileged(DefaultInstanceManager.java:397)
+	at org.apache.catalina.core.DefaultInstanceManager.newInstance(DefaultInstanceManager.java:118)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4638)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5204)
+	at org.apache.catalina.core.StandardContext$1.call(StandardContext.java:5199)
+	at java.util.concurrent.FutureTask$Sync.innerRun(FutureTask.java:303)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:138)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
+5-Jul-2012 10:39:48 AM org.apache.catalina.core.StandardContext listenerStart
+SEVERE: Skipped installing application listeners due to previous error(s)
+5-Jul-2012 10:48:59 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+5-Jul-2012 10:48:59 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()

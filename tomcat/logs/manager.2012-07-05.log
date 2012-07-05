@@ -1,0 +1,24 @@
+5-Jul-2012 10:39:15 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: init: Associated with Deployer 'Catalina:type=Deployer,host=localhost'
+5-Jul-2012 10:39:15 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: init: Global resources are available
+5-Jul-2012 10:39:15 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'
+5-Jul-2012 10:39:22 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: start: Starting web application '/collector'
+5-Jul-2012 10:39:23 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'
+5-Jul-2012 10:39:29 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'
+5-Jul-2012 10:39:37 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: start: Starting web application '/collector'
+5-Jul-2012 10:39:38 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'
+5-Jul-2012 10:39:46 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'
+5-Jul-2012 10:39:48 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: start: Starting web application '/collector'
+5-Jul-2012 10:39:49 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'
+5-Jul-2012 10:44:17 AM org.apache.catalina.core.ApplicationContext log
+INFO: HTMLManager: list: Listing contexts for virtual host 'localhost'

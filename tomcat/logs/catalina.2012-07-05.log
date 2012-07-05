@@ -1,0 +1,146 @@
+5-Jul-2012 10:34:30 AM org.apache.catalina.core.AprLifecycleListener init
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+5-Jul-2012 10:34:31 AM org.apache.coyote.AbstractProtocolHandler init
+INFO: Initializing ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:34:31 AM org.apache.coyote.AbstractProtocolHandler init
+INFO: Initializing ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:34:31 AM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 1448 ms
+5-Jul-2012 10:34:31 AM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service Catalina
+5-Jul-2012 10:34:31 AM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/7.0.12
+5-Jul-2012 10:34:31 AM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive collector.war
+5-Jul-2012 10:34:32 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Error listenerStart
+5-Jul-2012 10:34:33 AM org.apache.catalina.util.SessionIdGenerator createSecureRandom
+INFO: Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [1,089] milliseconds.
+5-Jul-2012 10:34:33 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/collector] startup failed due to previous errors
+5-Jul-2012 10:34:33 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory ROOT
+5-Jul-2012 10:34:33 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory host-manager
+5-Jul-2012 10:34:33 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory manager
+5-Jul-2012 10:34:33 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory examples
+5-Jul-2012 10:34:34 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory docs
+5-Jul-2012 10:34:34 AM org.apache.coyote.AbstractProtocolHandler start
+INFO: Starting ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:34:34 AM org.apache.coyote.AbstractProtocolHandler start
+INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:34:34 AM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 3276 ms
+5-Jul-2012 10:38:49 AM org.apache.catalina.core.StandardServer await
+INFO: A valid shutdown command was received via the shutdown port. Stopping the Server instance.
+5-Jul-2012 10:38:49 AM org.apache.coyote.AbstractProtocolHandler pause
+INFO: Pausing ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:38:50 AM org.apache.coyote.AbstractProtocolHandler pause
+INFO: Pausing ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:38:51 AM org.apache.catalina.core.StandardService stopInternal
+INFO: Stopping service Catalina
+5-Jul-2012 10:38:51 AM org.apache.catalina.util.LifecycleBase stop
+INFO: The stop() method was called on component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/collector]] after stop() had already been called. The second call will be ignored.
+5-Jul-2012 10:38:51 AM org.apache.coyote.AbstractProtocolHandler stop
+INFO: Stopping ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:38:51 AM org.apache.coyote.AbstractProtocolHandler stop
+INFO: Stopping ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:38:56 AM org.apache.catalina.core.AprLifecycleListener init
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+5-Jul-2012 10:38:56 AM org.apache.coyote.AbstractProtocolHandler init
+INFO: Initializing ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:38:56 AM org.apache.coyote.AbstractProtocolHandler init
+INFO: Initializing ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:38:56 AM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 665 ms
+5-Jul-2012 10:38:56 AM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service Catalina
+5-Jul-2012 10:38:56 AM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/7.0.12
+5-Jul-2012 10:38:56 AM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive collector.war
+5-Jul-2012 10:38:57 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Error listenerStart
+5-Jul-2012 10:38:57 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/collector] startup failed due to previous errors
+5-Jul-2012 10:38:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory ROOT
+5-Jul-2012 10:38:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory host-manager
+5-Jul-2012 10:38:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory manager
+5-Jul-2012 10:38:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory examples
+5-Jul-2012 10:38:57 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory docs
+5-Jul-2012 10:38:57 AM org.apache.coyote.AbstractProtocolHandler start
+INFO: Starting ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:38:57 AM org.apache.coyote.AbstractProtocolHandler start
+INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:38:57 AM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 939 ms
+5-Jul-2012 10:39:22 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Error listenerStart
+5-Jul-2012 10:39:22 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/collector] startup failed due to previous errors
+5-Jul-2012 10:39:37 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Error listenerStart
+5-Jul-2012 10:39:37 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/collector] startup failed due to previous errors
+5-Jul-2012 10:39:48 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Error listenerStart
+5-Jul-2012 10:39:48 AM org.apache.catalina.core.StandardContext startInternal
+SEVERE: Context [/collector] startup failed due to previous errors
+5-Jul-2012 10:43:57 AM org.apache.catalina.startup.HostConfig checkResources
+INFO: Undeploying context [/collector]
+5-Jul-2012 10:43:57 AM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive collector.war
+5-Jul-2012 10:43:59 AM org.zkoss.zk.ui.http.WebManager <init>:116
+INFO: Starting ZK 6.0.0 CE (build: 2012021410)
+5-Jul-2012 10:43:59 AM org.zkoss.zk.ui.sys.ConfigParser parseConfigXml:160
+INFO: Loading system default
+5-Jul-2012 10:44:26 AM org.zkoss.util.resource.impl.LabelLoader loadLabels:232
+INFO: Loading labels for en_GB
+5-Jul-2012 10:44:26 AM org.zkoss.util.resource.impl.LabelLoader loadLabels:232
+INFO: Loading labels for en
+5-Jul-2012 10:48:57 AM org.apache.catalina.core.AprLifecycleListener init
+INFO: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: /usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64/server:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/lib/amd64:/usr/lib/jvm/java-6-sun-1.6.0.26/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib
+5-Jul-2012 10:48:57 AM org.apache.coyote.AbstractProtocolHandler init
+INFO: Initializing ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:48:57 AM org.apache.coyote.AbstractProtocolHandler init
+INFO: Initializing ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:48:57 AM org.apache.catalina.startup.Catalina load
+INFO: Initialization processed in 734 ms
+5-Jul-2012 10:48:57 AM org.apache.catalina.core.StandardService startInternal
+INFO: Starting service Catalina
+5-Jul-2012 10:48:57 AM org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet Engine: Apache Tomcat/7.0.12
+5-Jul-2012 10:48:57 AM org.apache.catalina.startup.HostConfig deployWAR
+INFO: Deploying web application archive collector.war
+5-Jul-2012 10:48:58 AM org.zkoss.zk.ui.http.WebManager <init>:116
+INFO: Starting ZK 6.0.0 CE (build: 2012021410)
+5-Jul-2012 10:48:58 AM org.zkoss.zk.ui.sys.ConfigParser parseConfigXml:160
+INFO: Loading system default
+5-Jul-2012 10:48:59 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory ROOT
+5-Jul-2012 10:48:59 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory host-manager
+5-Jul-2012 10:48:59 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory manager
+5-Jul-2012 10:48:59 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory examples
+5-Jul-2012 10:48:59 AM org.apache.catalina.startup.HostConfig deployDirectory
+INFO: Deploying web application directory docs
+5-Jul-2012 10:48:59 AM org.apache.coyote.AbstractProtocolHandler start
+INFO: Starting ProtocolHandler ["http-bio-8080"]
+5-Jul-2012 10:48:59 AM org.apache.coyote.AbstractProtocolHandler start
+INFO: Starting ProtocolHandler ["ajp-bio-8009"]
+5-Jul-2012 10:48:59 AM org.apache.catalina.startup.Catalina start
+INFO: Server startup in 2300 ms
+5-Jul-2012 10:49:02 AM org.zkoss.util.resource.impl.LabelLoader loadLabels:232
+INFO: Loading labels for en_GB
+5-Jul-2012 10:49:02 AM org.zkoss.util.resource.impl.LabelLoader loadLabels:232
+INFO: Loading labels for en
